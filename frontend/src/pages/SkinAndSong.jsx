@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useApp } from '../hooks/useApp';
-import { GALLERY_LINKS, SONGS, SKIN_SPOTLIGHTS } from '../data/content';
+import { getAllGalleryLinks, getAllSongs, getAllSkinSpotlights } from '../data';
 import PageHero from '../components/PageHero';
 import GalleryPreview from '../components/GalleryPreview';
 import SkinSpotlight from '../components/SkinSpotlight';
@@ -33,6 +33,10 @@ function SongVideoCard({ song, t, lang }) {
 
 export default function SkinAndSong() {
   const { t, lang } = useApp();
+  const skinSpotlights = getAllSkinSpotlights();
+  const galleryLinks = getAllGalleryLinks();
+  const songs = getAllSongs();
+
   return (
     <>
       <PageHero title={t('skin_title')} sub={t('skin_sub')} />
@@ -40,7 +44,7 @@ export default function SkinAndSong() {
       {/* ── SPOTLIGHT SKINS ── */}
       <h2 className="section-title center-title">{t('skin_spotlight_title')}</h2>
       <p className="sub-text">{t('skin_spotlight_sub')}</p>
-      <SkinSpotlight data={SKIN_SPOTLIGHTS} />
+      <SkinSpotlight data={skinSpotlights} />
 
       <div className="spotlight-gallery-cta">
         <a href="#gallery" className="spotlight-gallery-link">
@@ -50,15 +54,15 @@ export default function SkinAndSong() {
 
       <h2 id="gallery" className="section-title center-title">{t('gallery_title')}</h2>
       <p className="sub-text">{t('gallery_sub')}</p>
-      <GalleryPreview links={GALLERY_LINKS} />
+      <GalleryPreview links={galleryLinks} />
 
       <h2 className="section-title center-title">{t('songs_title')}</h2>
       <p className="sub-text">{t('songs_sub')}</p>
 
       <main id="main">
         <div className="flex">
-          {SONGS.map(s => (
-            <SongVideoCard key={s.title} song={s} t={t} lang={lang} />
+          {songs.map(s => (
+            <SongVideoCard key={s.id} song={s} t={t} lang={lang} />
           ))}
         </div>
       </main>

@@ -2,14 +2,15 @@ import { useRef, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useApp } from '../hooks/useApp';
 import { useParticles } from '../hooks/useParticles';
-import { CHARACTERS, HOME_GALLERY_LINKS } from '../data/content';
-import { NAV_LINKS } from '../data/navLinks';
+import { getAllCharacters, getHomeGalleryLinks, NAV_LINKS } from '../data';
 import GalleryPreview from '../components/GalleryPreview';
 import Footer from '../components/Footer';
 
 export default function Home() {
   const { t } = useApp();
   const canvasRef = useRef(null);
+  const characters = getAllCharacters();
+  const homeGalleryLinks = getHomeGalleryLinks();
   useParticles(canvasRef);
 
   // 3D tilt on desktop
@@ -65,7 +66,7 @@ export default function Home() {
         <h2 className="section-title center-title">{t('about_title')}</h2>
         <p className="about-text">{t('about_text')}</p>
 
-        <GalleryPreview links={HOME_GALLERY_LINKS} />
+        <GalleryPreview links={homeGalleryLinks} />
       </section>
 
       {/* CHARACTERS GRID */}
@@ -77,7 +78,7 @@ export default function Home() {
 
       <main id="main">
         <div className="grid">
-          {CHARACTERS.map((c, i) => (
+          {characters.map((c, i) => (
             <div className="card" key={c.id} style={{ '--accent-c': c.accent }}>
               <h3 id={`Vocaloid${i + 1}`} className="char-name">{c.name}</h3>
               <p>{t(c.descKey)}</p>
@@ -96,7 +97,7 @@ export default function Home() {
         <details className="char-list">
           <summary>{t('footer_jump')}</summary>
           <nav>
-            {CHARACTERS.map((c, i) => (
+            {characters.map((c, i) => (
               <a key={c.id} href={`#Vocaloid${i + 1}`}>{c.name}</a>
             ))}
           </nav>

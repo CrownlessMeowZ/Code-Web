@@ -1,13 +1,14 @@
 import { useRef } from 'react';
 import { useApp } from '../hooks/useApp';
 import { useCanvasParticles } from '../hooks/useCanvasParticles';
-import { CONCERTS } from '../data/content';
+import { getAllConcerts } from '../data';
 import PageHero from '../components/PageHero';
 import Footer from '../components/Footer';
 
 export default function Concerts() {
   const { t } = useApp();
   const canvasRef = useRef(null);
+  const concerts = getAllConcerts();
   const { triggerBurst } = useCanvasParticles(canvasRef, { mode: 'burst' });
 
   const handleConcertClick = (e, color) => {
@@ -28,10 +29,10 @@ export default function Concerts() {
         <canvas ref={canvasRef} className="penlight-canvas" aria-hidden="true" />
         <nav className="links version-timeline concerts-timeline" aria-label="Concerts and live events timeline">
           <ol className="timeline-list">
-            {CONCERTS.map((c, idx) => (
+            {concerts.map((c) => (
               <li
                 className="timeline-item concert-item"
-                key={idx}
+                key={c.id}
                 onClick={(e) => handleConcertClick(e, c.penlightColor)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {

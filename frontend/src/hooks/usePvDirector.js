@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
-import { PV_PRESET_IDS } from '../data/pvPresets';
+import { PV_PRESET_ID_SET } from '../data';
 
 export function usePvDirector() {
   const [preset, setPreset] = useState('wide');
 
   const setPresetSafe = useCallback((next) => {
-    if (PV_PRESET_IDS.includes(next)) setPreset(next);
+    if (PV_PRESET_ID_SET.has(next)) setPreset(next);
   }, []);
 
   return {

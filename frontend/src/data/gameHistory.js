@@ -1,9 +1,10 @@
 /**
  * Mainline Project DIVA titles for the Game History page.
- * platformKeys / seriesKey are used internally for single-select tab filtering.
+ * Hash-indexed by id / platform / series for O(1) filter lookups.
  */
-export const GAMES = [
-  {
+
+export const GAMES_BY_ID = {
+  1: {
     id: 1,
     title: 'Hatsune Miku: Project DIVA',
     platform: 'PSP',
@@ -14,7 +15,7 @@ export const GAMES = [
     coverImage: '/history/diva-psp.jpg',
     coverHref: 'https://project-diva.fandom.com/wiki/Hatsune_Miku:_Project_DIVA_(video_game)',
   },
-  {
+  2: {
     id: 2,
     title: 'Hatsune Miku: Project DIVA 2nd',
     platform: 'PSP',
@@ -25,7 +26,7 @@ export const GAMES = [
     coverImage: '/history/diva-2nd.jpg',
     coverHref: 'https://project-diva.fandom.com/wiki/Hatsune_Miku:_Project_DIVA_2nd',
   },
-  {
+  3: {
     id: 3,
     title: 'Project DIVA Arcade',
     platform: 'Arcade',
@@ -36,7 +37,7 @@ export const GAMES = [
     coverImage: '/history/diva-arcade.jpg',
     coverHref: 'https://project-diva.fandom.com/wiki/Hatsune_Miku:_Project_DIVA_Arcade',
   },
-  {
+  4: {
     id: 4,
     title: 'Project DIVA Extend',
     platform: 'PSP',
@@ -47,7 +48,7 @@ export const GAMES = [
     coverImage: '/history/diva-extend.jpg',
     coverHref: 'https://project-diva.fandom.com/wiki/Hatsune_Miku:_Project_DIVA_Extend',
   },
-  {
+  5: {
     id: 5,
     title: 'Hatsune Miku: Project DIVA f',
     platform: 'PS Vita',
@@ -58,7 +59,7 @@ export const GAMES = [
     coverImage: '/history/diva-f-vita.jpg',
     coverHref: 'https://project-diva.fandom.com/wiki/Hatsune_Miku:_Project_DIVA_f',
   },
-  {
+  6: {
     id: 6,
     title: 'Hatsune Miku: Project DIVA F',
     platform: 'PS3',
@@ -69,7 +70,7 @@ export const GAMES = [
     coverImage: '/history/diva-f-ps3.jpg',
     coverHref: 'https://project-diva.fandom.com/wiki/Hatsune_Miku:_Project_DIVA_F',
   },
-  {
+  7: {
     id: 7,
     title: 'Hatsune Miku: Project DIVA f 2nd',
     platform: 'PS Vita · PS3',
@@ -80,7 +81,7 @@ export const GAMES = [
     coverImage: '/history/diva-f2nd.jpg',
     coverHref: 'https://project-diva.fandom.com/wiki/Hatsune_Miku:_Project_DIVA_f_2nd',
   },
-  {
+  8: {
     id: 8,
     title: 'Hatsune Miku: Project DIVA X',
     platform: 'PS Vita · PS4',
@@ -91,7 +92,7 @@ export const GAMES = [
     coverImage: '/history/diva-x.jpg',
     coverHref: 'https://project-diva.fandom.com/wiki/Hatsune_Miku:_Project_DIVA_X',
   },
-  {
+  9: {
     id: 9,
     title: 'Hatsune Miku: Project DIVA Future Tone',
     platform: 'PS4',
@@ -102,7 +103,7 @@ export const GAMES = [
     coverImage: '/history/future-tone.jpg',
     coverHref: 'https://miku.sega.com/futuretone/',
   },
-  {
+  10: {
     id: 10,
     title: 'Hatsune Miku: Project DIVA MegaMix',
     platform: 'Switch',
@@ -113,7 +114,7 @@ export const GAMES = [
     coverImage: '/history/megamix.jpg',
     coverHref: 'https://project-diva.fandom.com/wiki/Hatsune_Miku:_Project_DIVA_Mega_Mix',
   },
-  {
+  11: {
     id: 11,
     title: 'Hatsune Miku: Project DIVA MegaMix+',
     platform: 'PC',
@@ -124,9 +125,54 @@ export const GAMES = [
     coverImage: '/history/megamix-plus.jpg',
     coverHref: 'https://miku.sega.com/megamixplus/',
   },
-];
+};
 
-/** Single-select filter tab definitions (platform + series in one bar). */
+/** Stable chronological order */
+export const GAME_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+/**
+ * @param {number|string} id
+ * @returns {object | null}
+ */
+export function getGameById(id) {
+  return GAMES_BY_ID[id] ?? GAMES_BY_ID[Number(id)] ?? null;
+}
+
+export const GAMES = GAME_IDS.map((id) => GAMES_BY_ID[id]);
+
+/** @returns {object[]} */
+export function getAllGames() {
+  return GAMES;
+}
+
+/** Pre-built O(1) secondary indexes: platform key → game[] */
+export const GAMES_BY_PLATFORM = (() => {
+  /** @type {Record<string, object[]>} */
+  const map = {};
+  for (const id of GAME_IDS) {
+    const g = GAMES_BY_ID[id];
+    for (const pk of g.platformKeys ?? []) {
+      if (!map[pk]) map[pk] = [];
+      map[pk].push(g);
+    }
+  }
+  return map;
+})();
+
+/** Pre-built O(1) secondary indexes: series key → game[] */
+export const GAMES_BY_SERIES = (() => {
+  /** @type {Record<string, object[]>} */
+  const map = {};
+  for (const id of GAME_IDS) {
+    const g = GAMES_BY_ID[id];
+    const sk = g.seriesKey;
+    if (!map[sk]) map[sk] = [];
+    map[sk].push(g);
+  }
+  return map;
+})();
+
+/** Single-select filter tab definitions (platform + series). */
 export const FILTER_TABS = [
   { id: 'all', group: 'all' },
   { id: 'platform:psp', group: 'platform', key: 'psp' },
@@ -145,15 +191,39 @@ export const FILTER_TABS = [
 
 export const VALID_FILTER_IDS = FILTER_TABS.map((tab) => tab.id);
 
+/** O(1) membership for stored filter validation */
+export const VALID_FILTER_ID_SET = new Set(VALID_FILTER_IDS);
+
+/** Pre-partitioned tab lists (avoid filtering FILTER_TABS each render) */
+export const PLATFORM_FILTER_TABS = FILTER_TABS.filter(
+  (tab) => tab.group === 'all' || tab.group === 'platform',
+);
+export const SERIES_FILTER_TABS = FILTER_TABS.filter((tab) => tab.group === 'series');
+
+/**
+ * Filter catalog via pre-indexed Hash Maps (O(1) bucket lookup).
+ * Signature keeps (games, activeFilter) for call-site compatibility; when
+ * `games` is the main catalog (or omitted), uses index maps. Otherwise falls
+ * back to linear scan for custom subsets.
+ *
+ * @param {object[] | undefined} games
+ * @param {string} activeFilter
+ * @returns {object[]}
+ */
 export function filterGames(games, activeFilter) {
-  if (!activeFilter || activeFilter === 'all') return games;
+  const source = games ?? GAMES;
+  if (!activeFilter || activeFilter === 'all') return source;
 
   const [group, key] = activeFilter.split(':');
+  const useIndex = source === GAMES || games == null;
+
   if (group === 'platform') {
-    return games.filter((g) => g.platformKeys?.includes(key));
+    if (useIndex) return GAMES_BY_PLATFORM[key] ?? [];
+    return source.filter((g) => g.platformKeys?.includes(key));
   }
   if (group === 'series') {
-    return games.filter((g) => g.seriesKey === key);
+    if (useIndex) return GAMES_BY_SERIES[key] ?? [];
+    return source.filter((g) => g.seriesKey === key);
   }
-  return games;
+  return source;
 }

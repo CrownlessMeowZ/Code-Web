@@ -1,5 +1,5 @@
 import { useApp } from '../hooks/useApp';
-import { PV_PRESETS } from '../data/pvPresets';
+import { PV_PRESETS } from '../data';
 
 export default function PvDirectorControls({ preset, onPresetChange }) {
   const { t } = useApp();

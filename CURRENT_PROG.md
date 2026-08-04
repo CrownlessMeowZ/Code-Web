@@ -20,10 +20,18 @@
   - `AppContext.jsx` — removed dead `toggleTheme`; theme/lang persist via storage utils; lean context contract
   - `FlipCard.jsx` — shared flip shell (state, click, Enter/Space, `aria-pressed`, `--accent-c`)
   - Consumers: `Characters.jsx`, `SkinSpotlight.jsx` wired to `FlipCard` (zero visual/a11y regression)
+- **Phase 2 Data Layer Decoupling:**
+  - Removed monolith `data/content.js`
+  - Domain modules: `characters`, `skins`, `gallery`, `songs`, `versions`, `producers`, `concerts` (+ enhanced `gameHistory`)
+  - Barrel: `data/index.js`
+  - Hash Maps `*_BY_ID` + ordered ID lists + `getAll*()` / `get*ById()` for O(1) lookup
+  - Skins: denormalized `charName`/`accent` resolved via `getCharacterById` (DRY)
+  - Game History: `GAMES_BY_PLATFORM` / `GAMES_BY_SERIES` / `VALID_FILTER_ID_SET` O(1) filter buckets
+  - All pages import from `../data` barrel
 
 ## Current Task
 
-_Phase 1 DRY complete. Awaiting approval before Phase 2 (e.g. migrate GameHistory/useDivaAccent/i18n to storage utils, or CSS/content splits)._
+_Phase 2 complete. Awaiting approval before Phase 3 (CSS split / dead CSS purge, storage migration for accent/i18n, etc.)._
 
 ## Completed (docs)
 

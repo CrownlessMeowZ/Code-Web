@@ -5,3 +5,6 @@ export const PV_PRESETS = [
 ];
 
 export const PV_PRESET_IDS = PV_PRESETS.map((p) => p.id);
+
+/** O(1) membership for preset validation */
+export const PV_PRESET_ID_SET = new Set(PV_PRESET_IDS);

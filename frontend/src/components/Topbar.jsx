@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useApp } from '../hooks/useApp';
-import { NAV_LINKS } from '../data/navLinks';
+import { NAV_LINKS } from '../data';
 import SettingsPanel from './SettingsPanel';
 
 export default function Topbar() {

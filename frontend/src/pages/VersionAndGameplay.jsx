@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useApp } from '../hooks/useApp';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { usePvDirector } from '../hooks/usePvDirector';
-import { VERSIONS, GAMEPLAY_VIDEOS } from '../data/content';
+import { getAllVersions, getAllGameplayVideos } from '../data';
 import PageHero from '../components/PageHero';
 import PvDirectorControls from '../components/PvDirectorControls';
 import TechZoneBar from '../components/TechZoneBar';
@@ -39,6 +39,9 @@ function GameplayVideoCard({ v, t, lang }) {
 export default function VersionAndGameplay() {
   const { t, lang } = useApp();
   const revealRef = useScrollReveal();
+  const versions = getAllVersions();
+  const gameplayVideos = getAllGameplayVideos();
+
   return (
     <>
       <PageHero title={t('ver_title')} sub={t('ver_sub')} />
@@ -47,7 +50,7 @@ export default function VersionAndGameplay() {
 
       <nav className="links version-timeline version-timeline--reveal" aria-label="Version history timeline">
         <ol className="timeline-list">
-          {VERSIONS.map(v => (
+          {versions.map(v => (
             <li ref={revealRef} className="timeline-item" key={v.year}>
               <span className="timeline-year">{v.year}</span>
               <div className="timeline-body">
@@ -64,8 +67,8 @@ export default function VersionAndGameplay() {
 
       <main id="main">
         <div className="flex">
-          {GAMEPLAY_VIDEOS.map(v => (
-            <GameplayVideoCard key={v.titleKey} v={v} t={t} lang={lang} />
+          {gameplayVideos.map(v => (
+            <GameplayVideoCard key={v.id} v={v} t={t} lang={lang} />
           ))}
         </div>
       </main>

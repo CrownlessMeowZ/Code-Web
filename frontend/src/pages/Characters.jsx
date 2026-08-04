@@ -1,6 +1,6 @@
 import { useApp } from '../hooks/useApp';
 import { useDivaAccent } from '../hooks/useDivaAccent';
-import { CHARACTERS, EXTRA_CHARACTERS } from '../data/content';
+import { getAllCharacters, getExtraCharacters } from '../data';
 import PageHero from '../components/PageHero';
 import Footer from '../components/Footer';
 import FlipCard from '../components/FlipCard';
@@ -61,7 +61,7 @@ export default function Characters() {
           <span>{t('tab_main')}</span>
         </div>
         <div className="char-grid">
-          {CHARACTERS.map(c => <CharFlipCard key={c.id} char={c} onAccentSelect={setAccent} />)}
+          {getAllCharacters().map(c => <CharFlipCard key={c.id} char={c} onAccentSelect={setAccent} />)}
         </div>
 
         {/* ── EXTRA ── */}
@@ -69,7 +69,7 @@ export default function Characters() {
           <span>{t('tab_extra')}</span>
         </div>
         <div className="char-grid char-grid--extra">
-          {EXTRA_CHARACTERS.map(c => <CharFlipCard key={c.id} char={c} onAccentSelect={setAccent} />)}
+          {getExtraCharacters().map(c => <CharFlipCard key={c.id} char={c} onAccentSelect={setAccent} />)}
         </div>
       </main>
 
