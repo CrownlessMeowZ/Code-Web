@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AppContext } from './app-context';
+import { readStorage, writeStorage } from '../utils/storage';
 
 function normalizeLang(language) {
   return language?.startsWith('vi') ? 'vi' : 'en';
@@ -8,7 +9,7 @@ function normalizeLang(language) {
 
 export function AppProvider({ children }) {
   const { t, i18n } = useTranslation();
-  const [theme, setTheme] = useState(() => localStorage.getItem('diva-theme') || 'dark');
+  const [theme, setTheme] = useState(() => readStorage('diva-theme', 'dark'));
 
   const lang = useMemo(() => normalizeLang(i18n.language), [i18n.language]);
 
@@ -18,26 +19,16 @@ export function AppProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    try {
-      localStorage.setItem('diva-theme', theme);
-    } catch {
-      // storage unavailable
-    }
+    writeStorage('diva-theme', theme);
   }, [theme]);
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    try {
-      localStorage.setItem('diva-lang', lang);
-    } catch {
-      // storage unavailable
-    }
+    writeStorage('diva-lang', lang);
   }, [lang]);
 
-  const toggleTheme = () => setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
-
   const value = useMemo(
-    () => ({ theme, setTheme, toggleTheme, lang, setLang, t }),
+    () => ({ theme, setTheme, lang, setLang, t }),
     [theme, lang, setLang, t],
   );
 
@@ -47,4 +38,3 @@ export function AppProvider({ children }) {
     </AppContext.Provider>
   );
 }
-

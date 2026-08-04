@@ -15,10 +15,15 @@
 - **Audit Batch 1 (L1/L2/L4/L5/L12):** `settings_lang`, `footer_producers_src`, `nav_toggle` keys; orphan `gh_*`/`btn_*`/`lbl_official_*` keys removed; Home `chars_sub` strip removed; Producers footer i18n; Topbar hamburger aria-label i18n
 - **Audit Batch 2 (L3/L6/L7/L8/L9/L10/L11):** removed dead `game` field on EXTRA_CHARACTERS; flip-card keyboard a11y (Characters + SkinSpotlight); scroll `behavior: 'auto'`; try/catch on all localStorage writes; GameHistory uses `useApp()`; `resolveVideoRef` unexported; local favicon + `fonts.gstatic.com` preconnect
 - **Audit Batch 3 (M1/M2/M3/M4/M5/M8) — LOCKED:** `useScrollReveal` pending-queue fix; Routes no remount key; dead GH filter v1 CSS + `body:not(#introduce)` removed; shared `NAV_LINKS` + `PV_PRESETS`; `body.home-page` class via React (removed `id="introduce"`)
+- **Phase 1 DRY & Utilities:**
+  - `utils/storage.js` — `readStorage` / `writeStorage` (try/catch safe)
+  - `AppContext.jsx` — removed dead `toggleTheme`; theme/lang persist via storage utils; lean context contract
+  - `FlipCard.jsx` — shared flip shell (state, click, Enter/Space, `aria-pressed`, `--accent-c`)
+  - Consumers: `Characters.jsx`, `SkinSpotlight.jsx` wired to `FlipCard` (zero visual/a11y regression)
 
 ## Current Task
 
-_Planning Batch 4 (High Risk: H1/H2/H3) — awaiting user strategy decision._
+_Phase 1 DRY complete. Awaiting approval before Phase 2 (e.g. migrate GameHistory/useDivaAccent/i18n to storage utils, or CSS/content splits)._
 
 ## Completed (docs)
 
@@ -36,12 +41,24 @@ _Planning Batch 4 (High Risk: H1/H2/H3) — awaiting user strategy decision._
 | 5 | PV Director presets (M5) | Wide/Close/Dynamic đổi frame; `aria-pressed` đúng |
 | 6 | Series History filters (M3) | Filter tabs + result count hoạt động sau khi dọn CSS cũ |
 
+## Phase 1 — Manual Test Checklist
+
+| # | Scenario | Expected |
+|---|----------|----------|
+| 1 | Settings theme dark/light | `data-theme` + persist `diva-theme` sau reload |
+| 2 | Settings language en/vi | `documentElement.lang` + persist `diva-lang` |
+| 3 | Characters flip card click/keyboard | Flip 3D, `aria-pressed`, accent sync |
+| 4 | Skin spotlight flip cards | Flip 3D, a11y, producer/song back face |
+
 ## Backlog (deferred)
 
 - **M2-followup — Video playback position restore:** UX feature (không phải bug M2). Khi cần: cache `currentTime` per video qua `sessionStorage` (keyed `pathname + videoId`), restore on `loadedmetadata`. Scope: `VersionAndGameplay`, `SkinAndSong`.
 - `content.js`: skin `producer`/`song`, character `alt`, concert metadata still inline (partial — see M6 / H1)
 - Backend (Spring Boot) not implemented — see H2
 - RAG chatbot not started
+- Phase 1 follow-up: migrate `useDivaAccent`, `GameHistory`, `i18n.js` sang `utils/storage.js`
+- Audit CSS dead code purge + `index.css` split
+- `content.js` domain split
 
 ## Known Bugs / Pending
 

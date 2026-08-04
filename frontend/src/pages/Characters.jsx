@@ -1,67 +1,50 @@
-import { useState } from 'react';
 import { useApp } from '../hooks/useApp';
 import { useDivaAccent } from '../hooks/useDivaAccent';
 import { CHARACTERS, EXTRA_CHARACTERS } from '../data/content';
 import PageHero from '../components/PageHero';
 import Footer from '../components/Footer';
+import FlipCard from '../components/FlipCard';
 
 function CharFlipCard({ char, onAccentSelect }) {
   const { t } = useApp();
-  const [flipped, setFlipped] = useState(false);
-
-  const toggle = () => {
-    setFlipped((f) => !f);
-    onAccentSelect(char.accent);
-  };
 
   return (
-    <div
-      className={`char-flip ${char.id}-card${flipped ? ' flipped' : ''}`}
-      role="button"
-      tabIndex={0}
-      aria-label={`${char.name} profile card`}
-      aria-pressed={flipped}
-      onClick={toggle}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          toggle();
-        }
-      }}
-      style={{ '--accent-c': char.accent }}
+    <FlipCard
+      className={`char-flip ${char.id}-card`}
+      accent={char.accent}
+      ariaLabel={`${char.name} profile card`}
+      onFlip={() => onAccentSelect(char.accent)}
     >
-      <div className="char-flip-inner">
-        <div className="char-flip-front" style={{ borderColor: char.accent + '66' }}>
-          <img src={char.img} alt={char.alt} />
-          <div className="char-name-overlay">{char.name}</div>
-        </div>
-        <div className="char-flip-back">
-          <p className="char-back-name" style={{ color: char.accent }}>{char.name}</p>
-          <p className="char-code">{char.code} &nbsp;·&nbsp; {char.voice}</p>
-
-          <div className="char-stat-row">
-            <span className="char-stat-label">{t('lbl_voice_by')}</span>
-            <span className="char-stat-val">{t(char.voiceByKey)}</span>
-          </div>
-          <div className="char-stat-row">
-            <span className="char-stat-label">{t('lbl_released')}</span>
-            <span className="char-stat-val">{t(char.releasedKey)}</span>
-          </div>
-          <div className="char-stat-row">
-            <span className="char-stat-label">{t('lbl_height')}</span>
-            <span className="char-stat-val">{t(char.heightKey)}</span>
-          </div>
-          <div className="char-stat-row">
-            <span className="char-stat-label">{t('lbl_signature')}</span>
-            <span className="char-stat-val">{t(char.signatureKey)}</span>
-          </div>
-          <p className="char-songs-title">{t('lbl_iconic_songs')}</p>
-          <ul className="char-songs-list">
-            {char.songs.map(s => <li key={s}>{s}</li>)}
-          </ul>
-        </div>
+      <div className="char-flip-front" style={{ borderColor: char.accent + '66' }}>
+        <img src={char.img} alt={char.alt} />
+        <div className="char-name-overlay">{char.name}</div>
       </div>
-    </div>
+      <div className="char-flip-back">
+        <p className="char-back-name" style={{ color: char.accent }}>{char.name}</p>
+        <p className="char-code">{char.code} &nbsp;·&nbsp; {char.voice}</p>
+
+        <div className="char-stat-row">
+          <span className="char-stat-label">{t('lbl_voice_by')}</span>
+          <span className="char-stat-val">{t(char.voiceByKey)}</span>
+        </div>
+        <div className="char-stat-row">
+          <span className="char-stat-label">{t('lbl_released')}</span>
+          <span className="char-stat-val">{t(char.releasedKey)}</span>
+        </div>
+        <div className="char-stat-row">
+          <span className="char-stat-label">{t('lbl_height')}</span>
+          <span className="char-stat-val">{t(char.heightKey)}</span>
+        </div>
+        <div className="char-stat-row">
+          <span className="char-stat-label">{t('lbl_signature')}</span>
+          <span className="char-stat-val">{t(char.signatureKey)}</span>
+        </div>
+        <p className="char-songs-title">{t('lbl_iconic_songs')}</p>
+        <ul className="char-songs-list">
+          {char.songs.map(s => <li key={s}>{s}</li>)}
+        </ul>
+      </div>
+    </FlipCard>
   );
 }
 
