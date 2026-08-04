@@ -13,3 +13,8 @@ build/
 # Local LLM tools
 grok-prompt.txt
 audit_report.md
+
+# Local AI / CLI session artifacts (keep on disk, never commit)
+terminals/
+agent-tools/
+mcps/
