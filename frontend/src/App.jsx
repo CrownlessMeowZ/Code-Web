@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
+import { useDivaAccent } from './hooks/useDivaAccent';
 import Topbar from './components/Topbar';
 import Home from './pages/Home';
 import Characters from './pages/Characters';
@@ -34,16 +35,23 @@ function PageWrapper({ children, isHome }) {
 
 function InnerApp() {
   const location = useLocation();
+  const isHome = location.pathname === '/';
+  useDivaAccent();
+
+  useEffect(() => {
+    document.body.classList.toggle('home-page', isHome);
+    return () => document.body.classList.remove('home-page');
+  }, [isHome]);
 
   // Scroll to top on route change
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, [location.pathname]);
 
   return (
     <>
       <Topbar />
-      <Routes location={location} key={location.pathname}>
+      <Routes location={location}>
         <Route path="/" element={
           <PageWrapper isHome><Home /></PageWrapper>
         } />

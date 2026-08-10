@@ -1,0 +1,21 @@
+/* ================================================================
+   TOKENS
+   ================================================================ */
+/* ---- TOKENS ---- */
+:root {
+    --bg:        #04040f;
+    --surface:   #08081a;
+    --card:      rgba(8, 8, 26, 0.72);
+    --border:    rgba(0, 200, 255, 0.12);
+    --border-h:  rgba(0, 212, 255, 0.50);
+    --cyan:      #00d4ff;
+    --pink:      #ff66cc;
+    --gold:      #ffe566;
+    --text:      #dde0ff;
+    --muted:     #5e5e92;
+    --topbar-h:  60px;
+    --ff-d:      'Cinzel Decorative', serif;
+    --ff-b:      'Rajdhani', sans-serif;
+    --r:         12px;
+    --t:         0.32s cubic-bezier(.4,0,.2,1);
+}

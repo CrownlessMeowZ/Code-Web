@@ -2,13 +2,15 @@ import { useRef, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useApp } from '../hooks/useApp';
 import { useParticles } from '../hooks/useParticles';
-import { CHARACTERS, HOME_GALLERY_LINKS } from '../data/content';
+import { getAllCharacters, getHomeGalleryLinks, NAV_LINKS } from '../data';
 import GalleryPreview from '../components/GalleryPreview';
 import Footer from '../components/Footer';
 
 export default function Home() {
   const { t } = useApp();
   const canvasRef = useRef(null);
+  const characters = getAllCharacters();
+  const homeGalleryLinks = getHomeGalleryLinks();
   useParticles(canvasRef);
 
   // 3D tilt on desktop
@@ -35,16 +37,6 @@ export default function Home() {
     }
   }, []);
 
-  const quickLinks = [
-    { to: '/',                 label: t('nav_home'),      cls: 'hql-home'      },
-    { to: '/characters',       label: t('nav_chars'),     cls: 'hql-chars'     },
-    { to: '/skin-and-song',    label: t('nav_skin'),      cls: 'hql-skin'      },
-    { to: '/version-gameplay', label: t('nav_ver'),       cls: 'hql-ver'       },
-    { to: '/game-history',     label: t('nav_history'),   cls: 'hql-patch'     },
-    { to: '/producers',        label: t('nav_producers'), cls: 'hql-producers' },
-    { to: '/concerts',         label: t('nav_concerts'),  cls: 'hql-concerts'  },
-  ];
-
   return (
     <>
       {/* HERO */}
@@ -56,11 +48,11 @@ export default function Home() {
           <p className="hero-sub">{t('hero_sub')}</p>
 
           <nav className="hero-quick-bar" aria-label="Quick navigation">
-            {quickLinks.map((l, i) => (
+            {NAV_LINKS.map((l, i) => (
               <span key={l.to}>
                 {i > 0 && <span className="hql-sep" />}
-                <NavLink to={l.to} className={({ isActive }) => `hql ${l.cls}${isActive ? ' active' : ''}`}>
-                  {l.label}
+                <NavLink to={l.to} className={({ isActive }) => `hql ${l.homeCls}${isActive ? ' active' : ''}`}>
+                  {t(l.labelKey)}
                 </NavLink>
               </span>
             ))}
@@ -74,19 +66,19 @@ export default function Home() {
         <h2 className="section-title center-title">{t('about_title')}</h2>
         <p className="about-text">{t('about_text')}</p>
 
-        <GalleryPreview links={HOME_GALLERY_LINKS} />
+        <GalleryPreview links={homeGalleryLinks} />
       </section>
 
       {/* CHARACTERS GRID */}
       <h2 className="section-title center-title">{t('chars_title')}</h2>
       <p className="sub-text">
-        {t('chars_sub').replace(/<[^>]*>/g, '')}{' '}
+        {t('chars_sub')}{' '}
         <Link to="/characters" style={{ color: 'var(--cyan)', textDecoration: 'none' }}>{t('chars_link_text')}</Link>
       </p>
 
       <main id="main">
         <div className="grid">
-          {CHARACTERS.map((c, i) => (
+          {characters.map((c, i) => (
             <div className="card" key={c.id} style={{ '--accent-c': c.accent }}>
               <h3 id={`Vocaloid${i + 1}`} className="char-name">{c.name}</h3>
               <p>{t(c.descKey)}</p>
@@ -105,7 +97,7 @@ export default function Home() {
         <details className="char-list">
           <summary>{t('footer_jump')}</summary>
           <nav>
-            {CHARACTERS.map((c, i) => (
+            {characters.map((c, i) => (
               <a key={c.id} href={`#Vocaloid${i + 1}`}>{c.name}</a>
             ))}
           </nav>

@@ -1,5 +1,5 @@
 import { useApp } from '../hooks/useApp';
-import { PRODUCERS } from '../data/content';
+import { getAllProducers } from '../data';
 import PageHero from '../components/PageHero';
 import Footer from '../components/Footer';
 
@@ -39,6 +39,7 @@ function ProducerCard({ p }) {
 
 export default function Producers() {
   const { t } = useApp();
+  const producers = getAllProducers();
 
   return (
     <>
@@ -50,7 +51,7 @@ export default function Producers() {
 
       <main id="main">
         <div className="grid producers-grid">
-          {PRODUCERS.map((p) => (
+          {producers.map((p) => (
             <ProducerCard key={p.id} p={p} />
           ))}
         </div>
@@ -58,7 +59,7 @@ export default function Producers() {
 
       <Footer extra={
         <span style={{ color: 'var(--muted)', fontSize: '12px' }}>
-          Producer data compiled from official track credits &amp; community archives
+          {t('footer_producers_src')}
         </span>
       } />
     </>

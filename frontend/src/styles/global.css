@@ -1,0 +1,208 @@
+/* ================================================================
+   GLOBAL — reset, body, keyframes, shared primitives
+   ================================================================ */
+/* ---- RESET ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--bg);
+    background-image:
+        radial-gradient(ellipse 80% 50% at 20% 10%, rgba(0,212,255,.06) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 80% 90%, rgba(255,102,204,.06) 0%, transparent 65%);
+    color: var(--text);
+    font-family: var(--ff-b);
+    font-size: 16px;
+    line-height: 1.75;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: 0;
+}
+body.home-page { padding-top: 0; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-h); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+::selection { background: rgba(0,212,255,.22); }
+
+/* ---- KEYFRAMES ---- */
+@keyframes shimmer {
+    from { background-position: -200% center; }
+    to   { background-position:  200% center; }
+}
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(8px); }
+}
+@keyframes pulse {
+    0%,100% { box-shadow: 0 0 12px rgba(0,212,255,.10); }
+    50%      { box-shadow: 0 0 30px rgba(0,212,255,.35); }
+}
+@keyframes scan {
+    from { left: -200px; }
+    to   { left: 110%; }
+}
+
+/* ================================================================
+   PAGE HERO — slim banner for inner pages
+   ================================================================ */
+.page-hero {
+    border-bottom: 1px solid var(--border);
+    padding: 52px 24px 40px; text-align: center;
+    background: linear-gradient(180deg, rgba(0,212,255,.04) 0%, transparent 100%);
+}
+.page-hero-title {
+    font-family: var(--ff-d); font-size: clamp(18px, 4vw, 34px);
+    letter-spacing: 3px; margin-bottom: 12px;
+    background: linear-gradient(90deg, var(--cyan), var(--pink));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.page-hero-sub { color: var(--muted); font-size: 15px; max-width: 600px; margin: 0 auto; }
+
+/* ================================================================
+   SHARED SECTION TITLES
+   ================================================================ */
+.section-title {
+    font-family: var(--ff-d); font-size: clamp(14px, 2.6vw, 24px);
+    color: var(--cyan); letter-spacing: 2px;
+    margin: 36px 24px 16px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp .8s ease both;
+}
+.center-title { text-align: center; border-bottom: none; margin: 36px auto 12px; max-width: 900px; }
+.sub-text { color: var(--muted); font-size: 14px; text-align: center; margin-bottom: 24px; }
+
+/* ================================================================
+   GLASSMORPHISM CARDS
+   ================================================================ */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 22px 20px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    position: relative; overflow: hidden;
+    transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+    animation: fadeUp .7s ease both;
+    display: flex;
+    flex-direction: column;
+}
+.card figure {
+    margin-top: auto;
+    padding-top: 12px;
+    overflow: hidden;
+    border-radius: var(--r);
+}
+.card figure img { padding: 0; border-radius: var(--r); }
+.card figure img:hover { transform: scale(1.04); box-shadow: none; filter: brightness(1.08); }
+
+/* Portrait full-body images on home page */
+.grid .card figure img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center top;
+    background: transparent;
+    border: none;
+}
+/* Home card: min-height cho text để figure luôn bắt đầu ở cùng vị trí */
+.grid .card p {
+    min-height: 80px;
+}
+.card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,212,255,.5), transparent);
+    opacity: 0; transition: opacity var(--t);
+}
+.card:hover { transform: translateY(-6px); border-color: var(--border-h); }
+.card:hover::before { opacity: 1; }
+.card:hover { box-shadow: 0 18px 48px rgba(0,0,0,.55), 0 0 24px rgba(0,212,255,.12); }
+
+/* stagger */
+.grid .card:nth-child(1),.flex .card:nth-child(1){animation-delay:.05s}
+.grid .card:nth-child(2),.flex .card:nth-child(2){animation-delay:.10s}
+.grid .card:nth-child(3),.flex .card:nth-child(3){animation-delay:.15s}
+.grid .card:nth-child(4),.flex .card:nth-child(4){animation-delay:.20s}
+.grid .card:nth-child(5),.flex .card:nth-child(5){animation-delay:.25s}
+.grid .card:nth-child(6){animation-delay:.30s}
+
+.char-name { font-family: var(--ff-d); font-size: 13px; color: var(--accent-c, var(--pink)); letter-spacing: 1px; margin-bottom: 10px; text-align: center; }
+.song-title { font-weight: 600; font-size: 17px; color: var(--gold); margin-bottom: 10px; }
+
+/* ================================================================
+   IMAGES
+   ================================================================ */
+img {
+    display: block; width: 100%; height: auto;
+    border-radius: var(--r); border: 1.5px solid var(--cyan);
+    padding: 3px; margin: 0 auto; background: var(--surface);
+    transition: transform var(--t), box-shadow var(--t), filter var(--t);
+}
+img:hover { transform: scale(1.04); box-shadow: 0 0 28px rgba(0,212,255,.28); filter: brightness(1.08); }
+
+.grid > .card:nth-child(odd)  img { border-color: var(--pink); }
+.grid > .card:nth-child(even) img { border-color: var(--cyan); }
+nav.links li:nth-child(odd)  img  { border-color: var(--gold); }
+nav.links li:nth-child(even) img  { border-color: var(--pink); }
+
+/* ---- video ---- */
+video {
+    width: 100%; height: auto; display: block;
+    border-radius: var(--r); border: 1.5px solid var(--border); background: #000;
+    transition: box-shadow var(--t);
+}
+video:hover { box-shadow: 0 0 22px rgba(0,212,255,.18); }
+
+/* ---- figures ---- */
+figure { text-align: center; margin-top: 16px; }
+figcaption { font-size: 12px; color: var(--muted); margin-top: 8px; font-style: italic; }
+
+/* ================================================================
+   GRID & FLEX LAYOUTS
+   ================================================================ */
+.grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 18px; padding: 20px 16px;
+    max-width: 1400px; margin: 0 auto;
+    grid-auto-rows: 1fr;
+}
+.flex {
+    display: flex; flex-wrap: wrap; gap: 18px;
+    padding: 20px 16px; justify-content: center;
+    max-width: 1400px; margin: 0 auto;
+}
+.flex > .card { width: 100%; min-width: 280px; }
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+.site-footer { margin-top: 52px; border-top: 1px solid var(--border); padding: 22px 24px; background: var(--surface); }
+.footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 12px;
+    font-size: 13px; color: var(--muted);
+}
+.char-list summary { cursor: pointer; color: var(--cyan); font-weight: 600; list-style: none; font-size: 13px; }
+.char-list[open] summary { color: var(--pink); }
+.char-list nav { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 10px; }
+.char-list nav a { color: var(--muted); text-decoration: none; font-size: 13px; transition: color var(--t); }
+.char-list nav a:hover { color: var(--cyan); }
+
+/* ================================================================
+   FIX 3 — Page transition: fade + slide-up
+   ================================================================ */
+@keyframes pageEnter {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-transition {
+    animation: pageEnter 0.35s cubic-bezier(.22,1,.36,1) both;
+}

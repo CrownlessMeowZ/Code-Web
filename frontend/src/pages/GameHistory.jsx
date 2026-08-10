@@ -1,23 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useApp } from "../hooks/useApp";
 import {
   GAMES,
-  FILTER_TABS,
-  VALID_FILTER_IDS,
+  PLATFORM_FILTER_TABS,
+  SERIES_FILTER_TABS,
+  VALID_FILTER_ID_SET,
   filterGames,
-} from "../data/gameHistory";
+} from "../data";
+import { readStorage, writeStorage } from "../utils/storage";
 import PageHero from "../components/PageHero";
 import Footer from "../components/Footer";
 
 const STORAGE_KEY = "gameHistory_activeFilter";
 
 function readStoredFilter() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && VALID_FILTER_IDS.includes(stored)) return stored;
-  } catch {
-    // localStorage unavailable
-  }
+  const stored = readStorage(STORAGE_KEY);
+  if (stored && VALID_FILTER_ID_SET.has(stored)) return stored;
   return "all";
 }
 
@@ -61,22 +59,17 @@ function GameCard({ game, placeholderLabel }) {
 }
 
 export default function GameHistory() {
-  const { t } = useTranslation();
+  const { t } = useApp();
   const [activeFilter, setActiveFilter] = useState(readStoredFilter);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, activeFilter);
+    writeStorage(STORAGE_KEY, activeFilter);
   }, [activeFilter]);
 
   const filtered = useMemo(
     () => filterGames(GAMES, activeFilter),
     [activeFilter],
   );
-
-  const platformTabs = FILTER_TABS.filter(
-    (tab) => tab.group === "all" || tab.group === "platform",
-  );
-  const seriesTabs = FILTER_TABS.filter((tab) => tab.group === "series");
 
   function selectFilter(id) {
     setActiveFilter(id);
@@ -98,7 +91,7 @@ export default function GameHistory() {
             {t("gameHistory.filterPlatform")}
           </span>
           <div className="gh-filter-tabs" role="tablist">
-            {platformTabs.map((tab) => (
+            {PLATFORM_FILTER_TABS.map((tab) => (
               <button
                 key={tab.id}
                 type="button"
@@ -118,7 +111,7 @@ export default function GameHistory() {
             {t("gameHistory.filterSeries")}
           </span>
           <div className="gh-filter-tabs" role="tablist">
-            {seriesTabs.map((tab) => (
+            {SERIES_FILTER_TABS.map((tab) => (
               <button
                 key={tab.id}
                 type="button"
