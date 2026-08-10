@@ -1,0 +1,100 @@
+/* ================================================================
+   RESPONSIVE breakpoints
+   ================================================================ */
+/* ================================================================
+   MEDIA QUERY 1 — max-width: 479px (small mobile)
+   ================================================================ */
+@media screen and (max-width: 479px) {
+    .topbar { padding: 0 16px; }
+    .hamburger { display: flex; }
+    .topbar-nav {
+        position: absolute; top: var(--topbar-h); left: 0; right: 0;
+        flex-direction: column; margin-left: 0; gap: 0;
+        background: rgba(4,4,15,.96); backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        max-height: 0; overflow: hidden;
+        transition: max-height .4s cubic-bezier(.4,0,.2,1);
+    }
+    .topbar-nav.open { max-height: 320px; }
+    .topbar-nav a {
+        padding: 14px 20px; font-size: 13px; text-align: left;
+        border-bottom: 1px solid var(--border); border-radius: 0;
+    }
+    .topbar-nav a::after { display: none; }
+    .topbar-nav a.active,
+    .topbar-nav a:hover { border-left: 3px solid var(--page-accent, var(--cyan)); padding-left: 17px; }
+
+    .hero-title { font-size: 32px; letter-spacing: 4px; }
+    .hero-eyebrow { font-size: 9px; letter-spacing: 3px; }
+    .hero-sub { font-size: 14px; }
+
+    .grid { grid-template-columns: 1fr; padding: 12px 10px; gap: 14px; }
+    .flex > .card { width: 100%; }
+    .char-grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 16px 12px; }
+    .char-flip { height: 320px; }
+
+    .preview-wrapper { width: 95%; }
+    nav.links img { width: 120px; height: 68px; }
+    .section-title { font-size: 13px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+
+/* ================================================================
+   MEDIA QUERY 2 — 480px to 771px (large phones)
+   ================================================================ */
+@media screen and (min-width: 480px) and (max-width: 771px) {
+    .hamburger { display: flex; }
+    .topbar-nav {
+        position: absolute; top: var(--topbar-h); left: 0; right: 0;
+        flex-direction: column; margin-left: 0;
+        background: rgba(4,4,15,.96); backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        max-height: 0; overflow: hidden;
+        transition: max-height .4s cubic-bezier(.4,0,.2,1);
+    }
+    .topbar-nav.open { max-height: 320px; }
+    .topbar-nav a {
+        padding: 13px 24px; border-bottom: 1px solid var(--border);
+    }
+    .topbar-nav a::after { display: none; }
+    .topbar-nav a.active,
+    .topbar-nav a:hover { border-left: 3px solid var(--page-accent, var(--cyan)); padding-left: 21px; }
+
+    .grid { grid-template-columns: 1fr 1fr; padding: 16px 14px; gap: 16px; }
+    .flex > .card { width: calc(50% - 10px); min-width: 220px; }
+    .char-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .char-flip { height: 360px; }
+    .preview-wrapper { width: 82%; }
+    nav.links img { width: 148px; height: 83px; }
+}
+
+/* ================================================================
+   MEDIA QUERY 3 — 772px to 997px (tablet)
+   ================================================================ */
+@media screen and (min-width: 772px) and (max-width: 997px) {
+    .grid { grid-template-columns: 45vw 45vw; justify-content: center; gap: 22px; padding: 20px 14px; }
+    .grid img { width: auto; max-width: 100%; max-height: 30vh; }
+    .flex > .card { width: 45vw; min-width: 0; }
+    .flex video { max-height: 30vh; }
+    .char-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .char-flip { height: 380px; }
+    .preview-wrapper { width: 60%; }
+    nav.links img { width: 160px; height: 90px; }
+    .topbar-nav a { font-size: 11px; padding: 10px 10px; }
+}
+
+/* ================================================================
+   MEDIA QUERY 4 — min-width: 998px (desktop)
+   ================================================================ */
+@media screen and (min-width: 998px) {
+    .grid { grid-template-columns: repeat(3, 30vw); justify-content: center; gap: 28px; padding: 28px 20px; }
+    .flex > .card { width: 30vw; min-width: 0; }
+    .char-grid { grid-template-columns: repeat(3, 1fr); max-width: 1200px; }
+    .char-grid--extra { max-width: 1200px; margin: 0 auto; }
+    .char-flip { height: 420px; }
+    .preview-wrapper { width: 50%; }
+    nav.links img { width: 192px; height: 108px; }
+    .about-text { font-size: 17px; }
+    .card:hover { transform: translateY(-8px) rotateX(2deg); }
+    .hero-title { filter: drop-shadow(0 0 40px rgba(0,212,255,.4)); }
+}

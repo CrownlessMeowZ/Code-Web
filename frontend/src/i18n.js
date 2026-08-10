@@ -2,8 +2,11 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from './locales/en.json';
 import vi from './locales/vi.json';
+import { readStorage } from './utils/storage';
 
-const savedLang = localStorage.getItem('diva-lang') || 'en';
+const SUPPORTED = new Set(['en', 'vi']);
+const stored = readStorage('diva-lang', 'en');
+const savedLang = SUPPORTED.has(stored) ? stored : 'en';
 
 i18n.use(initReactI18next).init({
   resources: {

@@ -28,10 +28,16 @@
   - Skins: denormalized `charName`/`accent` resolved via `getCharacterById` (DRY)
   - Game History: `GAMES_BY_PLATFORM` / `GAMES_BY_SERIES` / `VALID_FILTER_ID_SET` O(1) filter buckets
   - All pages import from `../data` barrel
+- **Phase 3 CSS Modularization & Storage Migration:**
+  - Storage: `useDivaAccent`, `i18n.js`, `GameHistory` → `readStorage` / `writeStorage` only (no raw localStorage in app code)
+  - Dead CSS purge: skip-link, hero CTA/buttons, flip-hint, entire Patch Notes, legacy topbar dropdown/icon/nav-settings, char-tab/badge, filter-tab-btn, light tag overrides
+  - CSS split: `styles/tokens|global|topbar|components|pages|responsive|theme-light.css`
+  - `index.css` is CSS barrel via `@import` (cascade-safe order)
+  - Production CSS gzip ~7.0 kB (down from ~8.3 kB)
 
 ## Current Task
 
-_Phase 2 complete. Awaiting approval before Phase 3 (CSS split / dead CSS purge, storage migration for accent/i18n, etc.)._
+_Phase 3 complete. Awaiting approval before next work (M6 content i18n, M7 Settings a11y, backend, etc.)._
 
 ## Completed (docs)
 
@@ -58,15 +64,21 @@ _Phase 2 complete. Awaiting approval before Phase 3 (CSS split / dead CSS purge,
 | 3 | Characters flip card click/keyboard | Flip 3D, `aria-pressed`, accent sync |
 | 4 | Skin spotlight flip cards | Flip 3D, a11y, producer/song back face |
 
+## Phase 3 — Manual Test Checklist
+
+| # | Scenario | Expected |
+|---|----------|----------|
+| 1 | Theme / lang / accent / GH filter persist | Reload giữ state (via `utils/storage`) |
+| 2 | Visual regression all routes | Layout/animation/light mode như trước |
+| 3 | Settings drawer + topbar mobile | Avatar opens drawer; hamburger nav OK |
+
 ## Backlog (deferred)
 
 - **M2-followup — Video playback position restore:** UX feature (không phải bug M2). Khi cần: cache `currentTime` per video qua `sessionStorage` (keyed `pathname + videoId`), restore on `loadedmetadata`. Scope: `VersionAndGameplay`, `SkinAndSong`.
-- `content.js`: skin `producer`/`song`, character `alt`, concert metadata still inline (partial — see M6 / H1)
+- Remaining content i18n partial (M6): skin `producer`/`song`, character `alt`, concert metadata still inline
 - Backend (Spring Boot) not implemented — see H2
 - RAG chatbot not started
-- Phase 1 follow-up: migrate `useDivaAccent`, `GameHistory`, `i18n.js` sang `utils/storage.js`
-- Audit CSS dead code purge + `index.css` split
-- `content.js` domain split
+- **M7** Settings a11y dialog
 
 ## Known Bugs / Pending
 

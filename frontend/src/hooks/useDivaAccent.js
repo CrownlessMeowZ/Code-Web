@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react';
+import { readStorage, writeStorage } from '../utils/storage';
 
 const STORAGE_KEY = 'diva-accent';
 
@@ -12,17 +13,13 @@ function applyAccent(color) {
 
 export function useDivaAccent() {
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = readStorage(STORAGE_KEY);
     if (saved) applyAccent(saved);
   }, []);
 
   const setAccent = useCallback((color) => {
     if (!color) return;
-    try {
-      localStorage.setItem(STORAGE_KEY, color);
-    } catch {
-      // storage unavailable
-    }
+    writeStorage(STORAGE_KEY, color);
     applyAccent(color);
   }, []);
 

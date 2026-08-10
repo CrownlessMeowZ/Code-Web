@@ -7,18 +7,15 @@ import {
   VALID_FILTER_ID_SET,
   filterGames,
 } from "../data";
+import { readStorage, writeStorage } from "../utils/storage";
 import PageHero from "../components/PageHero";
 import Footer from "../components/Footer";
 
 const STORAGE_KEY = "gameHistory_activeFilter";
 
 function readStoredFilter() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && VALID_FILTER_ID_SET.has(stored)) return stored;
-  } catch {
-    // localStorage unavailable
-  }
+  const stored = readStorage(STORAGE_KEY);
+  if (stored && VALID_FILTER_ID_SET.has(stored)) return stored;
   return "all";
 }
 
@@ -66,11 +63,7 @@ export default function GameHistory() {
   const [activeFilter, setActiveFilter] = useState(readStoredFilter);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, activeFilter);
-    } catch {
-      // storage unavailable
-    }
+    writeStorage(STORAGE_KEY, activeFilter);
   }, [activeFilter]);
 
   const filtered = useMemo(
