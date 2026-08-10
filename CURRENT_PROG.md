@@ -29,59 +29,33 @@
   - Game History: `GAMES_BY_PLATFORM` / `GAMES_BY_SERIES` / `VALID_FILTER_ID_SET` O(1) filter buckets
   - All pages import from `../data` barrel
 - **Phase 3 CSS Modularization & Storage Migration:**
-  - Storage: `useDivaAccent`, `i18n.js`, `GameHistory` → `readStorage` / `writeStorage` only (no raw localStorage in app code)
-  - Dead CSS purge: skip-link, hero CTA/buttons, flip-hint, entire Patch Notes, legacy topbar dropdown/icon/nav-settings, char-tab/badge, filter-tab-btn, light tag overrides
-  - CSS split: `styles/tokens|global|topbar|components|pages|responsive|theme-light.css`
-  - `index.css` is CSS barrel via `@import` (cascade-safe order)
-  - Production CSS gzip ~7.0 kB (down from ~8.3 kB)
+  - Storage: `useDivaAccent`, `i18n.js`, `GameHistory` → `readStorage` / `writeStorage` only
+  - Dead CSS purge + `styles/*` split; `index.css` CSS barrel
+- **Phase 4 Deep i18n & Accessibility (M6 & M7):**
+  - **M6:** skins `producerKey`/`songKey`; concerts `dateKey`/`locationKey`; keys in `en.json` + `vi.json`; `SkinSpotlight` / `Concerts` use `t()`
+  - **M7:** `SettingsPanel` → native HTML5 `<dialog>` (`showModal`/`close`, `::backdrop`, focus trap); CSS in `topbar.css`; Topbar `aria-haspopup`/`aria-controls`
 
 ## Current Task
 
-_Phase 3 complete. Awaiting approval before next work (M6 content i18n, M7 Settings a11y, backend, etc.)._
+_Phase 4 complete. Awaiting next priorities (backend scaffold, remaining proper-name i18n, video position restore, RAG)._
 
 ## Completed (docs)
 
 - Full code audit (Phase 1–3) saved to `audit_report.md` (read-only; no code changes applied)
 
-## Batch 3 — Manual Test Checklist (final)
+## Phase 4 — Manual Test Checklist
 
 | # | Scenario | Expected |
 |---|----------|----------|
-| 1 | `/version-gameplay` timeline scroll reveal (M1) | Mỗi year item fade-in một lần khi scroll vào viewport |
-| 2a | Game History filter persist sau Back (M2) | Filter đã chọn (vd. PSP) vẫn đúng — nhờ `localStorage` |
-| 2b | Video giữ vị trí phát sau Back (M2) | **False Positive / Out of Scope** — Expected chuẩn: **video reset về 0** do `<VersionAndGameplay>` unmount khi đổi route |
-| 3 | Home full-bleed + inner page padding (M3/M8) | Home hero không double padding; inner pages không chui dưới topbar |
-| 4 | Topbar + Home quick bar routes (M4) | Mọi link navigate đúng, active state đúng |
-| 5 | PV Director presets (M5) | Wide/Close/Dynamic đổi frame; `aria-pressed` đúng |
-| 6 | Series History filters (M3) | Filter tabs + result count hoạt động sau khi dọn CSS cũ |
-
-## Phase 1 — Manual Test Checklist
-
-| # | Scenario | Expected |
-|---|----------|----------|
-| 1 | Settings theme dark/light | `data-theme` + persist `diva-theme` sau reload |
-| 2 | Settings language en/vi | `documentElement.lang` + persist `diva-lang` |
-| 3 | Characters flip card click/keyboard | Flip 3D, `aria-pressed`, accent sync |
-| 4 | Skin spotlight flip cards | Flip 3D, a11y, producer/song back face |
-
-## Phase 3 — Manual Test Checklist
-
-| # | Scenario | Expected |
-|---|----------|----------|
-| 1 | Theme / lang / accent / GH filter persist | Reload giữ state (via `utils/storage`) |
-| 2 | Visual regression all routes | Layout/animation/light mode như trước |
-| 3 | Settings drawer + topbar mobile | Avatar opens drawer; hamburger nav OK |
+| 1 | Skin flip back face (en/vi) | Producer/song translated; `—` via `song_none` |
+| 2 | Concerts meta (en/vi) | Date + location + figcaption location translated |
+| 3 | Settings open via avatar | Modal drawer slides in; focus trapped in dialog |
+| 4 | Settings ESC / backdrop / ✕ | Closes; focus returns; `aria-expanded` false |
+| 5 | Theme/lang buttons | `aria-pressed` reflects selection |
 
 ## Backlog (deferred)
 
-- **M2-followup — Video playback position restore:** UX feature (không phải bug M2). Khi cần: cache `currentTime` per video qua `sessionStorage` (keyed `pathname + videoId`), restore on `loadedmetadata`. Scope: `VersionAndGameplay`, `SkinAndSong`.
-- Remaining content i18n partial (M6): skin `producer`/`song`, character `alt`, concert metadata still inline
-- Backend (Spring Boot) not implemented — see H2
-- RAG chatbot not started
-- **M7** Settings a11y dialog
-
-## Known Bugs / Pending
-
-- Remaining Medium audit items not yet applied: **M6** (content i18n partial), **M7** (Settings a11y dialog)
+- **M2-followup — Video playback position restore:** cache `currentTime` per video via `sessionStorage`. Scope: `VersionAndGameplay`, `SkinAndSong`.
+- Optional deeper i18n: skin module **names**, concert **titles**, character `alt` strings (proper nouns often stay English)
 - Backend (Spring Boot) not implemented
 - RAG chatbot not started

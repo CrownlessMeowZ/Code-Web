@@ -22,11 +22,11 @@ function SkinFlipCard({ skin, accent }) {
 
         <div className="skin-stat-row">
           <span className="skin-stat-label">{t('lbl_producer')}</span>
-          <span className="skin-stat-val">{skin.producer}</span>
+          <span className="skin-stat-val">{t(skin.producerKey)}</span>
         </div>
         <div className="skin-stat-row">
           <span className="skin-stat-label">{t('lbl_origin_song')}</span>
-          <span className="skin-stat-val">{skin.song}</span>
+          <span className="skin-stat-val">{t(skin.songKey)}</span>
         </div>
 
         <p className="skin-desc">{t(skin.descKey)}</p>

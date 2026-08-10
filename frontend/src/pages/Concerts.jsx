@@ -56,7 +56,7 @@ export default function Concerts() {
                 <div className="timeline-body">
                   <h3>{c.title}</h3>
                   <p className="concert-meta">
-                    {c.date} · {c.location}
+                    {t(c.dateKey)} · {t(c.locationKey)}
                   </p>
                   <p>{t(c.descKey)}</p>
                   {c.highlightKey && <p className="concert-highlight">{t(c.highlightKey)}</p>}
@@ -83,7 +83,7 @@ export default function Concerts() {
                           loading="lazy"
                         />
                       )}
-                      <figcaption>{c.title} — {c.location}</figcaption>
+                      <figcaption>{c.title} — {t(c.locationKey)}</figcaption>
                     </figure>
                   )}
                 </div>

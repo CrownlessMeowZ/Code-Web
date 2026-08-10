@@ -91,23 +91,53 @@
 }
 
 /* ================================================================
-   SETTINGS PANEL — desktop slide-in drawer
+   SETTINGS — native <dialog> + slide-in drawer
+   showModal() traps focus; ::backdrop replaces .settings-backdrop
    ================================================================ */
-#settings-panel { pointer-events: none; }
-#settings-panel.open { pointer-events: all; }
-.settings-backdrop {
-    position: fixed; inset: 0; z-index: 1200;
-    background: rgba(0,0,0,0); transition: background 0.3s;
+.settings-dialog {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    overflow: hidden;
+    z-index: 1200;
 }
-#settings-panel.open .settings-backdrop { background: rgba(0,0,0,0.45); }
-.settings-drawer {
-    position: fixed; top: 0; right: -300px; z-index: 1201;
-    width: 260px; height: 100vh;
-    background: var(--surface); border-left: 1px solid var(--border);
-    transition: right 0.32s cubic-bezier(.4,0,.2,1);
-    display: flex; flex-direction: column;
+.settings-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+    transition: opacity 0.3s ease;
 }
-#settings-panel.open .settings-drawer { right: 0; }
+.settings-dialog .settings-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 260px;
+    height: 100vh;
+    max-height: 100%;
+    margin: 0;
+    background: var(--surface);
+    border: none;
+    border-left: 1px solid var(--border);
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+}
+.settings-dialog[open] .settings-drawer {
+    animation: settingsSlideIn 0.32s cubic-bezier(.4, 0, .2, 1) both;
+}
+@keyframes settingsSlideIn {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .settings-dialog[open] .settings-drawer { animation: none; }
+}
 .settings-header {
     display: flex; align-items: center; justify-content: space-between;
     padding: 18px 20px 14px; border-bottom: 1px solid var(--border);
@@ -121,6 +151,10 @@
     border-radius: 4px; transition: color 0.2s, background 0.2s;
 }
 .settings-close:hover { color: var(--text); background: var(--border); }
+.settings-close:focus-visible {
+    outline: 2px solid var(--page-accent, var(--cyan));
+    outline-offset: 2px;
+}
 .settings-body { padding: 20px; flex: 1; overflow-y: auto; }
 .settings-group { margin-bottom: 28px; }
 .settings-label {
@@ -136,6 +170,10 @@
     cursor: pointer; transition: all 0.2s; text-align: center;
 }
 .settings-theme-opt:hover, .lang-opt:hover { border-color: var(--border-h); color: var(--text); }
+.settings-theme-opt:focus-visible, .lang-opt:focus-visible {
+    outline: 2px solid var(--page-accent, var(--cyan));
+    outline-offset: 2px;
+}
 .settings-theme-opt.active, .lang-opt.active {
     background: var(--border); border-color: var(--page-accent, var(--cyan)); color: var(--page-accent, var(--cyan));
 }

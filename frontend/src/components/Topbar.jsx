@@ -29,10 +29,13 @@ export default function Topbar() {
 
         <div className="topbar-controls">
           <button
+            type="button"
             className="topbar-avatar-btn"
             onClick={() => setSettingsOpen(true)}
             aria-label={t('settings_title')}
             aria-expanded={settingsOpen}
+            aria-haspopup="dialog"
+            aria-controls="settings-panel"
           >
             <span className="topbar-avatar-icon">
               {theme === 'dark' ? '🌙' : '☀️'}

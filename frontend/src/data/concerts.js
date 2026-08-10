@@ -1,14 +1,15 @@
 /**
  * Concerts & live events domain — Hash Map keyed by id.
+ * date / location use i18n keys (dateKey, locationKey).
  */
 
 export const CONCERTS_BY_ID = {
   'concert-1': {
     id: 'concert-1',
     year: '2013',
-    date: 'Aug 31 – Sep 1',
+    dateKey: 'concert_1_date',
     title: 'Hatsune Miku Magical Mirai 2013',
-    location: 'Tokyo Big Sight, Japan',
+    locationKey: 'concert_1_location',
     descKey: 'concert_1_desc',
     img: '/concerts/magical-mirai-2013.jpg',
     href: 'https://magicalmirai.com/2013/',
@@ -18,9 +19,9 @@ export const CONCERTS_BY_ID = {
   'concert-2': {
     id: 'concert-2',
     year: '2014',
-    date: 'Oct 2014',
+    dateKey: 'concert_2_date',
     title: 'Hatsune Miku Expo 2014',
-    location: 'Los Angeles → New York, USA',
+    locationKey: 'concert_2_location',
     descKey: 'concert_2_desc',
     img: '/concerts/miku-expo-2014.jpg',
     href: 'https://www.youtube.com/watch?v=khfe3hvL4g0',
@@ -30,9 +31,9 @@ export const CONCERTS_BY_ID = {
   'concert-3': {
     id: 'concert-3',
     year: '2013',
-    date: 'Aug 31 – Sep 1, 2013',
+    dateKey: 'concert_3_date',
     title: 'Magical Mirai (Annual Series)',
-    location: 'Tokyo + Osaka + other cities',
+    locationKey: 'concert_3_location',
     descKey: 'concert_3_desc',
     img: '/concerts/magical-mirai-series.jpg',
     href: 'https://magicalmirai.com/',
@@ -42,9 +43,9 @@ export const CONCERTS_BY_ID = {
   'concert-4': {
     id: 'concert-4',
     year: '2018',
-    date: 'May 2018',
+    dateKey: 'concert_4_date',
     title: 'Miku Expo 2018 Europe & Asia Tour',
-    location: 'Europe + Southeast Asia',
+    locationKey: 'concert_4_location',
     descKey: 'concert_4_desc',
     img: '/concerts/miku-expo-2018.jpg',
     href: 'https://mikuexpo.com/usamx2018/',
@@ -54,9 +55,9 @@ export const CONCERTS_BY_ID = {
   'concert-5': {
     id: 'concert-5',
     year: '2022',
-    date: 'Dec 2022',
+    dateKey: 'concert_5_date',
     title: 'Miku Expo 2022 (North America Return)',
-    location: 'Multiple US + Canada cities',
+    locationKey: 'concert_5_location',
     descKey: 'concert_5_desc',
     img: '/concerts/miku-expo-2022.jpg',
     href: 'https://www.youtube.com/watch?v=AufydOsiD6M',
