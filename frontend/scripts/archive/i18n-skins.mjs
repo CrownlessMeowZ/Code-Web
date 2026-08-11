@@ -1,3 +1,7 @@
+/**
+ * Archived - one-shot migration script, kept for reference, not part of active build.
+ */
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,15 +19,15 @@ const producerMap = {
 const songMap = {
   "song: 'The Intense Voice of Hatsune Miku'": "songKey: 'song_intense_voice'",
   "song: 'Senbonzakura'": "songKey: 'song_senbonzakura'",
-  "song: '—'": "songKey: 'song_none'",
-  "song: 'Colorful × Melody'": "songKey: 'song_colorful_melody'",
+  "song: 'â€”'": "songKey: 'song_none'",
+  "song: 'Colorful Ă— Melody'": "songKey: 'song_colorful_melody'",
   "song: 'SING&SMILE'": "songKey: 'song_sing_and_smile'",
   "song: 'Butterfly on Your Right Shoulder'": "songKey: 'song_butterfly_right_shoulder'",
   "song: 'To the End of Infinity'": "songKey: 'song_to_end_of_infinity'",
   "song: 'Erase or Zero'": "songKey: 'song_erase_or_zero'",
   "song: 'Magnet'": "songKey: 'song_magnet'",
   "song: 'Just Be Friends'": "songKey: 'song_just_be_friends'",
-  "song: 'Luka Luka★Night Fever'": "songKey: 'song_luka_night_fever'",
+  "song: 'Luka Lukaâ˜…Night Fever'": "songKey: 'song_luka_night_fever'",
   "song: 'Snowman'": "songKey: 'song_snowman'",
   "song: 'Cantarella'": "songKey: 'song_cantarella'",
   "song: 'Nostalogic'": "songKey: 'song_nostalogic'",

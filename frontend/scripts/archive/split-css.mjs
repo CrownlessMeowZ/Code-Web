@@ -1,3 +1,7 @@
+/**
+ * Archived - one-shot migration script, kept for reference, not part of active build.
+ */
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -10,10 +14,10 @@ const barrelPath = path.join(root, 'src/index.css');
 
 /**
  * Prefer pre-purged snapshot if present; else rebuild purge from git-less
- * recovery is not needed — _purged_full.css must exist for this run.
+ * recovery is not needed â€” _purged_full.css must exist for this run.
  */
 if (!fs.existsSync(purgedPath)) {
-  console.error('Missing _purged_full.css — abort');
+  console.error('Missing _purged_full.css â€” abort');
   process.exit(1);
 }
 
@@ -57,7 +61,7 @@ function findSingle(marker) {
 const L = {
   tokens: findSingle('---- TOKENS ----'),
   reset: findSingle('---- RESET ----'),
-  topbar: findBanner('TOPBAR — sticky'),
+  topbar: findBanner('TOPBAR â€” sticky'),
   hero: findBanner('HERO SECTION'),
   pageHero: findBanner('PAGE HERO'),
   sectionTitles: findBanner('SHARED SECTION TITLES'),
@@ -74,19 +78,19 @@ const L = {
   light: findBanner('LIGHT MODE'),
   topbarControls: findBanner('TOPBAR CONTROLS'),
   settings: findBanner('SETTINGS PANEL'),
-  heroQuickFix: findBanner('HERO QUICK BAR — fix'),
-  topbarAvatar: findBanner('FIX 2 — Topbar'),
-  pageTransition: findBanner('FIX 3 — Page transition'),
+  heroQuickFix: findBanner('HERO QUICK BAR â€” fix'),
+  topbarAvatar: findBanner('FIX 2 â€” Topbar'),
+  pageTransition: findBanner('FIX 3 â€” Page transition'),
   producers: findBanner('PRODUCERS page'),
-  charsLabel: findBanner('CHARACTERS — Section labels'),
+  charsLabel: findBanner('CHARACTERS â€” Section labels'),
   skin: findBanner('SKIN SPOTLIGHT'),
-  galleryCta: findSingle('Spotlight → Gallery') || findSingle('spotlight-gallery-cta'),
+  galleryCta: findSingle('Spotlight â†’ Gallery') || findSingle('spotlight-gallery-cta'),
   gameHistory: findBanner('GAME HISTORY'),
 };
 
 // gallery CTA marker is a short comment; resolve line
 try {
-  L.galleryCta = findSingle('Spotlight → Gallery');
+  L.galleryCta = findSingle('Spotlight â†’ Gallery');
 } catch {
   L.galleryCta = findSingle('spotlight-gallery-cta') - 1;
 }
@@ -101,7 +105,7 @@ ${slice1(L.tokens, L.reset - 1)}
 `,
 
   'global.css': `/* ================================================================
-   GLOBAL — reset, body, keyframes, shared primitives
+   GLOBAL â€” reset, body, keyframes, shared primitives
    ================================================================ */
 ${slice1(L.reset, L.topbar - 1)}
 
@@ -127,7 +131,7 @@ ${slice1(L.topbarAvatar, L.pageTransition - 1)}
 `,
 
   'components.css': `/* ================================================================
-   COMPONENTS — flip cards, gallery, PV, tech zone, skin flip
+   COMPONENTS â€” flip cards, gallery, PV, tech zone, skin flip
    ================================================================ */
 ${slice1(L.flip, L.images - 1)}
 
@@ -139,7 +143,7 @@ ${slice1(L.skin, L.galleryCta - 1)}
 `,
 
   'pages.css': `/* ================================================================
-   PAGES — Home, Version, Producers, Concerts, Characters, GH
+   PAGES â€” Home, Version, Producers, Concerts, Characters, GH
    ================================================================ */
 ${slice1(L.hero, L.pageHero - 1)}
 
@@ -182,9 +186,9 @@ for (const [name, content] of Object.entries(files)) {
 }
 
 const barrel = `/* ================================================================
-   PROJECT DIVA — CSS entry barrel
+   PROJECT DIVA â€” CSS entry barrel
    Cascade order is intentional:
-   tokens → global → topbar → components → pages → responsive → theme
+   tokens â†’ global â†’ topbar â†’ components â†’ pages â†’ responsive â†’ theme
    ================================================================ */
 @import './styles/tokens.css';
 @import './styles/global.css';
