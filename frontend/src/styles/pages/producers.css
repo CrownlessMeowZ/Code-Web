@@ -1,0 +1,90 @@
+/* ================================================================
+   PRODUCERS page (Bước 4)
+   ================================================================ */
+.producer-card {
+  text-align: left;
+  padding-bottom: 22px;
+}
+.producer-avatar-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.producer-avatar {
+  width: 108px;
+  height: 108px;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 3px solid var(--accent-c, var(--cyan));
+  padding: 4px;
+  background: var(--surface);
+}
+.producer-avatar-wrap a {
+  display: inline-block;
+  border-radius: 999px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.producer-avatar-wrap a:hover .producer-avatar {
+  transform: scale(1.06);
+  box-shadow: 0 0 0 3px var(--cyan);
+}
+.producer-name {
+  font-family: var(--ff-d);
+  font-size: 15px;
+  color: var(--cyan);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  text-align: center;
+}
+.producer-meta {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.producer-genre {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(0,212,255,.08);
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+.producer-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+.producer-famous {
+  font-size: 12px;
+  margin-bottom: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+}
+.producer-famous strong {
+  display: block;
+  color: var(--text);
+  font-size: 14px;
+  margin-top: 2px;
+}
+.producer-label {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 10px;
+}
+.producer-songs {
+  list-style: none;
+  font-size: 12px;
+  color: var(--muted);
+  padding-left: 4px;
+  margin: 0;
+}
+.producer-songs li {
+  padding: 2px 0;
+}
+.producer-songs li::before {
+  content: '♪ ';
+  color: var(--cyan);
+}

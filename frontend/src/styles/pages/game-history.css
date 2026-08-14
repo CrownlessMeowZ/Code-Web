@@ -1,0 +1,191 @@
+/* ================================================================
+   GAME HISTORY — Filter tabs & game cards
+   ================================================================ */
+.gh-page {
+  padding-bottom: 48px;
+}
+
+.gh-filter-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 28px;
+}
+
+.gh-filter-group-label {
+  display: block;
+  font-family: var(--ff-b);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.gh-filter-group + .gh-filter-group {
+  margin-top: 14px;
+}
+
+.gh-filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.gh-filter-tab {
+  padding: 9px 20px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--ff-b);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.gh-filter-tab:hover {
+  border-color: var(--border-h);
+  color: var(--text);
+}
+
+.gh-filter-tab.active {
+  background: rgba(0, 212, 255, 0.12);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.gh-filter-meta {
+  margin-top: 16px;
+  font-family: var(--ff-b);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.gh-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+.gh-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  transition: border-color var(--t), transform var(--t);
+}
+
+.gh-card:hover {
+  border-color: var(--border-h);
+  transform: translateY(-4px);
+}
+
+.gh-card-cover {
+  aspect-ratio: 16 / 9;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.gh-card-cover a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.gh-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+
+.gh-card-cover a:hover img {
+  transform: scale(1.03);
+}
+
+.gh-card-cover a:focus-visible img {
+  outline: 3px solid var(--pink);
+  outline-offset: -3px;
+}
+
+.gh-card-cover-placeholder {
+  font-family: var(--ff-b);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 16px;
+  text-align: center;
+}
+
+.gh-card-body {
+  padding: 16px 18px 18px;
+}
+
+.gh-card-title {
+  font-family: var(--ff-b);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.gh-card-meta {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.gh-card-series {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(0, 212, 255, 0.12);
+  color: var(--cyan);
+  border: 1px solid var(--border);
+}
+
+.gh-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .gh-filter-tabs {
+    gap: 6px;
+  }
+
+  .gh-filter-tab {
+    padding: 8px 14px;
+    font-size: 10px;
+  }
+
+  .gh-card-grid {
+    grid-template-columns: 1fr;
+    padding: 0 16px 32px;
+  }
+
+  .gh-filter-section {
+    padding: 0 16px 24px;
+  }
+}

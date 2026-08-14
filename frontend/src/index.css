@@ -6,7 +6,14 @@
 @import './styles/tokens.css';
 @import './styles/global.css';
 @import './styles/topbar.css';
-@import './styles/components.css';
-@import './styles/pages.css';
+@import './styles/components/flip-card.css';
+@import './styles/components/gallery-preview.css';
+@import './styles/components/pv-director.css';
+@import './styles/pages/home.css';
+@import './styles/pages/version-timeline.css';
+@import './styles/pages/producers.css';
+@import './styles/pages/concerts.css';
+@import './styles/pages/characters-extras.css';
+@import './styles/pages/game-history.css';
 @import './styles/responsive.css';
 @import './styles/theme-light.css';

@@ -1,0 +1,128 @@
+/* ================================================================
+   HERO SECTION — Introduce.html only
+   ================================================================ */
+.hero {
+    position: relative; height: 100vh; min-height: 600px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; overflow: hidden;
+    background:
+        radial-gradient(ellipse 70% 60% at 50% 55%, rgba(0,212,255,.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 35% at 25% 80%, rgba(255,102,204,.06) 0%, transparent 70%),
+        var(--bg);
+}
+#hero-canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+}
+.hero-content {
+    position: relative; z-index: 2; text-align: center;
+    padding: 0 24px; animation: fadeUp 1s ease both;
+}
+.hero-eyebrow {
+    font-size: 11px; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--cyan); opacity: .75; margin-bottom: 18px;
+}
+.hero-title {
+    font-family: var(--ff-d);
+    font-size: clamp(36px, 9vw, 88px);
+    letter-spacing: 8px; line-height: 1.05;
+    background: linear-gradient(90deg, var(--cyan) 0%, var(--pink) 40%, var(--gold) 70%, var(--cyan) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    animation: shimmer 4s linear infinite;
+    margin-bottom: 22px;
+    filter: drop-shadow(0 0 32px rgba(0,212,255,.3));
+}
+.hero-sub {
+    font-size: clamp(14px, 2vw, 18px); color: var(--muted);
+    max-width: 500px; margin: 0 auto 28px; line-height: 1.8;
+}
+
+/* ── Hero Quick Links Bar ── */
+.hero-quick-bar {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 0;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 999px; padding: 6px 10px;
+    margin: 0 auto 28px; width: fit-content; max-width: 90%;
+}
+.hql {
+    position: relative; padding: 6px 16px;
+    font-family: var(--ff-b); font-size: 11px;
+    font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; text-decoration: none;
+    color: rgba(255,255,255,0.4);
+    transition: color var(--t);
+    white-space: nowrap;
+}
+.hql::after {
+    content: ''; position: absolute;
+    bottom: 2px; left: 16px; right: 16px;
+    height: 1.5px; transform: scaleX(0);
+    transform-origin: left; transition: transform var(--t);
+}
+.hql:hover { color: #fff; }
+.hql:hover::after { transform: scaleX(1); }
+
+/* Per-page accent colors */
+.hql-home  { color: var(--page-accent, var(--cyan)); }
+.hql-home::after  { background: var(--page-accent, var(--cyan)); transform: scaleX(1); }
+.hql-chars:hover  { color: var(--pink); }
+.hql-chars::after { background: var(--pink); }
+.hql-skin:hover   { color: var(--gold); }
+.hql-skin::after  { background: var(--gold); }
+.hql-ver:hover    { color: #aaffcc; }
+.hql-ver::after   { background: #aaffcc; }
+.hql-patch:hover  { color: #b388ff; }
+.hql-patch::after { background: #b388ff; }
+.hql-producers:hover  { color: #ffaa55; }
+.hql-producers::after { background: #ffaa55; }
+.hql-concerts:hover   { color: #00d4ff; }
+.hql-concerts::after  { background: #00d4ff; }
+
+/* Active page highlight — set via JS same as topbar */
+.hql.active { color: #fff; }
+.hql.active::after { transform: scaleX(1); }
+
+.hql-sep {
+    width: 1px; height: 12px;
+    background: rgba(255,255,255,0.1); flex-shrink: 0;
+}
+
+.scroll-hint {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 10px;
+    animation: bounce 2.2s ease-in-out infinite;
+}
+.scroll-hint::after {
+    content: ''; width: 1px; height: 36px;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+}
+
+/* ================================================================
+   ABOUT SECTION (Introduce page)
+   ================================================================ */
+.about-section {
+    padding: 48px 24px 0;
+    max-width: 900px; margin: 0 auto;
+    text-align: center;
+    animation: fadeUp .9s .1s ease both;
+}
+.about-text { color: var(--muted); font-size: 16px; line-height: 1.85; margin-bottom: 32px; }
+.about-text strong { color: var(--cyan); }
+
+/* ================================================================
+   HERO QUICK BAR — fix overflow khi tiếng Việt
+   ================================================================ */
+.hero-quick-bar {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    white-space: nowrap;
+    max-width: 92vw;
+}
+.hero-quick-bar::-webkit-scrollbar { display: none; }
+.hql { white-space: nowrap; }

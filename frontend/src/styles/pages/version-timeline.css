@@ -1,0 +1,48 @@
+/* ================================================================
+   VERSION TIMELINE (VersionAndGameplay page)
+   ================================================================ */
+.version-timeline { max-width: 820px; margin: 0 auto; padding: 20px 24px; width: 100%; }
+.timeline-list { list-style: none; padding: 0; position: relative; }
+.timeline-list::before {
+    content: ''; position: absolute; left: 52px; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, var(--cyan), var(--pink)); opacity: .3;
+}
+.timeline-item {
+    display: flex; gap: 22px; align-items: flex-start;
+    margin-bottom: 26px; animation: fadeUp .7s ease both;
+}
+.timeline-item:nth-child(1){animation-delay:.05s}
+.timeline-item:nth-child(2){animation-delay:.10s}
+.timeline-item:nth-child(3){animation-delay:.15s}
+.timeline-item:nth-child(4){animation-delay:.20s}
+.timeline-item:nth-child(5){animation-delay:.25s}
+.timeline-year {
+    flex: 0 0 44px; font-family: var(--ff-d); font-size: 11px;
+    color: var(--gold); text-align: right; padding-top: 5px; letter-spacing: 1px;
+}
+.timeline-body {
+    flex: 1; background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--cyan); border-radius: var(--r); padding: 14px 18px;
+    transition: border-left-color var(--t), box-shadow var(--t);
+}
+.timeline-body:hover { border-left-color: var(--pink); box-shadow: 0 0 20px rgba(255,102,204,.12); }
+.timeline-body h3 { font-family: var(--ff-d); font-size: 12px; color: var(--cyan); margin-bottom: 6px; letter-spacing: 1px; }
+.timeline-body p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+/* Scroll-reveal timeline (Version & Gameplay) — higher specificity than .timeline-item */
+.version-timeline--reveal .timeline-item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+    .version-timeline--reveal .timeline-item {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .version-timeline--reveal .timeline-item.is-visible {
+        opacity: 1;
+        transform: none;
+    }
+}

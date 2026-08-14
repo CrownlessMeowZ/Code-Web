@@ -1,6 +1,6 @@
 /**
- * Data layer barrel — single public entry for domain modules.
- * Prefer this over deep imports of individual domain files.
+ * Data layer barrel — page/component entry for domain modules.
+ * AI / Java tool-calling must import getters from `./public` only.
  */
 
 // Characters

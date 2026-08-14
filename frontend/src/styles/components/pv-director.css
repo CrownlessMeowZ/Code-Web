@@ -1,0 +1,65 @@
+/* ================================================================
+   PV DIRECTOR MODE (Version & Gameplay)
+   ================================================================ */
+.pv-director-controls {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;
+}
+.pv-director-btn {
+    padding: 6px 14px; font-family: var(--ff-b); font-size: 11px;
+    font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 999px; color: var(--muted); cursor: pointer;
+    transition: all var(--t);
+}
+.pv-director-btn:hover { border-color: var(--page-accent, var(--cyan)); color: var(--text); }
+.pv-director-btn.active {
+    border-color: var(--page-accent, var(--cyan));
+    color: var(--page-accent, var(--cyan));
+    background: rgba(0, 212, 255, 0.08);
+}
+.pv-director-figure { margin: 0; }
+.pv-frame {
+    overflow: hidden; border-radius: var(--r);
+    transition: transform 0.45s ease;
+    transform-origin: center center;
+}
+.pv-frame video { width: 100%; display: block; vertical-align: top; }
+.pv-frame--wide { transform: scale(1); }
+.pv-frame--close { transform: scale(1.15) translateY(-4%); }
+.pv-frame--dynamic { transform: scale(1); }
+@media (prefers-reduced-motion: no-preference) {
+    .pv-frame--dynamic { animation: pv-pan 8s ease-in-out infinite alternate; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .pv-frame--dynamic { transform: scale(1.08); animation: none; }
+}
+@keyframes pv-pan {
+    from { transform: scale(1.2) translateX(-5%); }
+    to   { transform: scale(1.2) translateX(5%); }
+}
+
+/* Technical Zone HUD */
+.tech-zone-bar {
+    display: flex; align-items: center; gap: 10px;
+    margin: 10px 0 8px; padding: 8px 12px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--r);
+}
+.tech-zone-label {
+    font-family: var(--ff-d); font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--muted); white-space: nowrap;
+}
+.tech-zone-track {
+    flex: 1; height: 6px; background: var(--border);
+    border-radius: 999px; overflow: hidden;
+}
+.tech-zone-fill {
+    height: 100%; border-radius: 999px;
+    background: var(--page-accent, var(--cyan));
+    box-shadow: 0 0 12px color-mix(in srgb, var(--page-accent, var(--cyan)) 50%, transparent);
+    transition: width 0.15s linear;
+}
+.tech-zone-pct {
+    font-family: var(--ff-d); font-size: 11px;
+    color: var(--page-accent, var(--cyan)); min-width: 36px; text-align: right;
+}

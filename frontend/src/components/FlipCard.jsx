@@ -2,8 +2,9 @@ import { useState } from 'react';
 
 /**
  * Generic flip-card shell: internal flipped state, click/keyboard toggle, a11y, accent CSS var.
- * Outer className should start with the CSS block root (e.g. "char-flip", "skin-flip");
- * the inner wrapper defaults to `${root}-inner` unless innerClassName is provided.
+ * Always applies `.diva-flip-card` / `.diva-flip-card-inner` (shared 3D primitive).
+ * Outer className should still include the contextual root (e.g. "char-flip", "skin-flip");
+ * the inner wrapper also keeps `${root}-inner` unless innerClassName is provided.
  *
  * @param {object} props
  * @param {string} props.className - Outer classes (first token used to derive *-inner)
@@ -29,11 +30,11 @@ export default function FlipCard({
   };
 
   const rootClass = className.trim().split(/\s+/)[0];
-  const resolvedInnerClass = innerClassName ?? `${rootClass}-inner`;
+  const resolvedInnerClass = innerClassName ?? `diva-flip-card-inner ${rootClass}-inner`;
 
   return (
     <div
-      className={`${className}${flipped ? ' flipped' : ''}`}
+      className={`diva-flip-card ${className}${flipped ? ' flipped' : ''}`}
       role="button"
       tabIndex={0}
       aria-label={ariaLabel}

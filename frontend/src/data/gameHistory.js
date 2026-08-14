@@ -201,29 +201,17 @@ export const PLATFORM_FILTER_TABS = FILTER_TABS.filter(
 export const SERIES_FILTER_TABS = FILTER_TABS.filter((tab) => tab.group === 'series');
 
 /**
- * Filter catalog via pre-indexed Hash Maps (O(1) bucket lookup).
- * Signature keeps (games, activeFilter) for call-site compatibility; when
- * `games` is the main catalog (or omitted), uses index maps. Otherwise falls
- * back to linear scan for custom subsets.
+ * Filter catalog via pre-indexed Hash Maps only (O(1) bucket lookup).
+ * Unknown group → full catalog. Unknown key → empty list.
  *
- * @param {object[] | undefined} games
  * @param {string} activeFilter
  * @returns {object[]}
  */
-export function filterGames(games, activeFilter) {
-  const source = games ?? GAMES;
-  if (!activeFilter || activeFilter === 'all') return source;
+export function filterGames(activeFilter) {
+  if (!activeFilter || activeFilter === 'all') return GAMES;
 
   const [group, key] = activeFilter.split(':');
-  const useIndex = source === GAMES || games == null;
-
-  if (group === 'platform') {
-    if (useIndex) return GAMES_BY_PLATFORM[key] ?? [];
-    return source.filter((g) => g.platformKeys?.includes(key));
-  }
-  if (group === 'series') {
-    if (useIndex) return GAMES_BY_SERIES[key] ?? [];
-    return source.filter((g) => g.seriesKey === key);
-  }
-  return source;
+  if (group === 'platform') return GAMES_BY_PLATFORM[key] ?? [];
+  if (group === 'series') return GAMES_BY_SERIES[key] ?? [];
+  return GAMES;
 }

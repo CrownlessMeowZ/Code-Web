@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useApp } from '../hooks/useApp';
 import { getAllGalleryLinks, getAllSongs, getAllSkinSpotlights } from '../data';
 import PageHero from '../components/PageHero';
@@ -9,22 +9,29 @@ import Footer from '../components/Footer';
 
 function SongVideoCard({ song, t, lang }) {
   const videoRef = useRef(null);
+  const [failed, setFailed] = useState(false);
 
   return (
     <div className="card">
       <h3 className="song-title">{song.title}</h3>
       <p>{t('song_by')} <em>{t(song.artistKey)}</em> — {t(song.descKey)}</p>
       <figure>
-        <video
-          ref={videoRef}
-          controls
-          aria-label={t('aria_song_video', { title: song.title })}
-        >
-          <source src={song.video} type="video/mp4" />
-          <track kind="captions" label={t('video_captions_label')} srcLang={lang} />
-          {t('video_no_support')}
-        </video>
-        <TechZoneBar videoRef={videoRef} />
+        {failed ? (
+          <p>{t('video_load_error')}</p>
+        ) : (
+          <video
+            ref={videoRef}
+            controls
+            preload="none"
+            aria-label={t('aria_song_video', { title: song.title })}
+            onError={() => setFailed(true)}
+          >
+            <source src={song.video} type="video/mp4" />
+            <track kind="captions" label={t('video_captions_label')} srcLang={lang} />
+            {t('video_no_support')}
+          </video>
+        )}
+        {!failed && <TechZoneBar videoRef={videoRef} />}
         <figcaption>{song.title} — {t(song.artistKey)}</figcaption>
       </figure>
     </div>
