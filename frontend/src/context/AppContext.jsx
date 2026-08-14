@@ -8,7 +8,7 @@ function normalizeLang(language) {
 }
 
 export function AppProvider({ children }) {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const [theme, setTheme] = useState(() => readStorage('diva-theme', 'dark'));
 
   const lang = useMemo(() => normalizeLang(i18n.language), [i18n.language]);
@@ -28,8 +28,8 @@ export function AppProvider({ children }) {
   }, [lang]);
 
   const value = useMemo(
-    () => ({ theme, setTheme, lang, setLang, t }),
-    [theme, lang, setLang, t],
+    () => ({ theme, setTheme, lang, setLang }),
+    [theme, lang, setLang],
   );
 
   return (

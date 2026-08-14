@@ -34,14 +34,90 @@
 - **Phase 4 Deep i18n & Accessibility (M6 & M7):**
   - **M6:** skins `producerKey`/`songKey`; concerts `dateKey`/`locationKey`; keys in `en.json` + `vi.json`; `SkinSpotlight` / `Concerts` use `t()`
   - **M7:** `SettingsPanel` → native HTML5 `<dialog>` (`showModal`/`close`, `::backdrop`, focus trap); CSS in `topbar.css`; Topbar `aria-haspopup`/`aria-controls`
+- **Workflow `architecture-review`:** `.grok/workflows/architecture-review.rhai` — 3 phases (code smell + adversarial verify, architecture/deps, Vietnamese roadmap report); 7 smell dimensions (dead-code, god-file, DRY, coupling, security, performance, error-handling); args `focus` (`all`|`frontend`|`backend`), `max_verify` (default 16)
+- **Architecture-review run (focus=all, max_verify=16):** 13/55 smell findings confirmed; 0 security; 0 architecture defects confirmed. Report: session scratch `report.md`. Visual freeze still holds.
+- **Batch 1 — React Performance & Resilience (LOCKED):**
+  - `t` removed from `AppContext` value; `useApp()` merges `useTranslation().t` (call sites unchanged)
+  - 7 pages + `NotFound` via `React.lazy` / `Suspense` (100vh empty fallback)
+  - `DEFAULT_COLORS` / `DEFAULT_CHARS` hoisted in `useCanvasParticles.js`
+  - `ErrorBoundary` around routes; catch-all `path="*"` → `NotFound` (`PageHero` 404)
+- **Batch 2 — Data encapsulation, Hash Map filter, video resilience (LOCKED):**
+  - `data/public.js` — getter-only surface for future AI tools (no raw maps)
+  - `filterGames(activeFilter)` — O(1) `GAMES_BY_PLATFORM` / `GAMES_BY_SERIES` only; linear `source.filter` removed
+  - `GameHistory.jsx` calls `filterGames(activeFilter)`
+  - Skin/Version videos: `preload="none"` + `onError` → `t('video_load_error')`; HUD unmounted on fail
+- **Batch 3 — CSS Modularization & DRY (LOCKED):**
+  - Split `components.css` → `styles/components/{flip-card,gallery-preview,pv-director}.css`
+  - Split `pages.css` → `styles/pages/{home,version-timeline,producers,concerts,characters-extras,game-history}.css`
+  - Shared `.diva-flip-card` / `.diva-flip-card-inner` primitive; contextual `.char-flip` / `.skin-flip` kept
+  - Barrel cascade unchanged: tokens → global → topbar → components → pages → responsive → theme
+  - `components.css` / `pages.css` deleted; no visual value changes
 
 ## Current Task
 
-_Phase 4 complete. Awaiting next priorities (backend scaffold, remaining proper-name i18n, video position restore, RAG)._
+**Next (flagship layer stack):** Spring Boot scaffold → `POST /api/chat` (proxy Gemini, secrets server-side) → FE `/chat` + tools over data getters → hybrid system prompt → wire FE→Java → update docs when ship.
 
-## Completed (docs)
+Suggested implementation order for a new session:
+1. Scaffold Spring Boot (layered: controller/service; host chat API in Java early)
+2. Chat UI route `/chat` + `features/chat/` + `services/api.js`
+3. Tools map: `getCharacterById`, `filterGames`, `getAll*`, …
+4. System prompt hybrid (Tier 1 catalog tools / Tier 2 general DIVA–Vocaloid / Tier 3 refuse off-domain)
+5. Env secrets (user adds keys locally; never commit)
+
+## Known Bugs / Pending
+
+Verified by `architecture-review` (13/55 smell; 0 security; 0 architecture confirmed). Do not implement until approved.
+
+**Immediate, no visual change:**
+1. ~~Hoist `DEFAULT_COLORS` / `DEFAULT_CHARS` in `useCanvasParticles.js`~~ — Batch 1 done
+2. ~~`React.lazy` + `Suspense` + Error Boundary + `path="*"` in `App.jsx`~~ — Batch 1 done
+3. ~~Split `t` out of `AppContext`; `useApp()` supplies `t` via `useTranslation()`~~ — Batch 1 done (ThemeProvider split not in this batch)
+4. ~~Narrow barrel; add `data/public.js` for future tools~~ — Batch 2 done
+5. ~~`filterGames(activeFilter)` Hash Map only~~ — Batch 2 done
+
+**Controlled visual hotfix:**
+6. ~~`preload="none"` + `onError` on Skin/Version videos; add `video_load_error`~~ — Batch 2 done
+7. ~~Split `pages.css` / `components.css`; shared flip primitive~~ — Batch 3 done
+
+**Not now:** GH empty-branch deletion; extra-character bio UI; Steam; bulk i18n; flip/particles/PV polish.
+
+## Portfolio & career strategy (session handoff — do not re-debate)
+
+- **User:** SE year 2; ~1 year to internship; narrow track Java Core + AI. Java = durable foundation; AI = long-term growth. Want SE / full-stack / AI Eng doors open. One deep flagship, not many shallow repos. Team project already covers “teamwork quantity.”
+- **Flagship = this monorepo multi-layer:** FE (near-done) + BE Java + Gemini tool-calling agent (+ mobile later, not urgent). “Best possible” = shippable, extensible, explainable — not perfect every feature.
+- **Project 2:** after intern; trend + AI; classical ML train optional later — not required before intern. DIVA agent = LLM/tools signal, not a Kaggle substitute.
+- **Avoid:** 10 shallow repos; Steam+social+mobile+train DL all at once pre-intern; claiming “full Spring” while `backend/src` is empty.
+
+### Anti-confusion (corrected misconceptions)
+
+| Wrong | Actual intent |
+|-------|----------------|
+| Java Core = drop AI / only backend intern | Java = system core; AI stays a DIVA layer + project 2 later |
+| AI first forever, BE always secondary | Both layers one product; Java hosts AI |
+| Tools-only catalog now; “smart” only after ML/DL | Hybrid agent from day one; separate ML project optional later |
+| Two full projects in parallel now | One DIVA flagship; project 2 after intern |
+
+### AI agent design (agreed)
+
+- **Tier 1:** Site catalog Qs (character/game/song…) → **must** use tools → no fabrication
+- **Tier 2:** General Vocaloid/DIVA → model may answer with boundaries/disclaimer
+- **Tier 3:** Off-domain → refuse
+- MVP ≠ mute bot outside Hash Map; MVP ≠ “week 2 done then train DNN.” Gemini is already LLM; next is RAG/eval/backend, not mandatory train.
+
+### Extension vs freeze
+
+- **OK to touch:** `data/` getters, AppContext, route `/chat`, `features/chat/`, `services/api.js`
+- **Freeze (hotfix / new route only):** visual pages, flip/particles/PV polish, bulk i18n key renames, Game History filter IDs
+
+### CV one-liner (agreed)
+
+Product DIVA: SPA + Spring (Java foundation) + Gemini tool-calling agent; Java is the system core, AI is a capability on a real product. README should tell the story by **layers** (product / systems / AI).
+
+## Completed (docs / cleanup)
 
 - Full code audit (Phase 1–3) saved to `audit_report.md` (read-only; no code changes applied)
+- Repo cleanup: removed unused `hero.png`, `favicon.svg`, `icons.svg`; archive one-shot scripts → `frontend/scripts/archive/`; removed Vite template `frontend/README.md`
+- GitHub: `CrownlessMeowZ/Project-DIVA-Web` (master)
 
 ## Phase 4 — Manual Test Checklist
 
@@ -53,9 +129,10 @@ _Phase 4 complete. Awaiting next priorities (backend scaffold, remaining proper-
 | 4 | Settings ESC / backdrop / ✕ | Closes; focus returns; `aria-expanded` false |
 | 5 | Theme/lang buttons | `aria-pressed` reflects selection |
 
-## Backlog (deferred)
+## Known Bugs / Pending
 
-- **M2-followup — Video playback position restore:** cache `currentTime` per video via `sessionStorage`. Scope: `VersionAndGameplay`, `SkinAndSong`.
-- Optional deeper i18n: skin module **names**, concert **titles**, character `alt` strings (proper nouns often stay English)
-- Backend (Spring Boot) not implemented
-- RAG chatbot not started
+- **M2-followup — Video playback position restore:** cache `currentTime` per video via `sessionStorage` (`VersionAndGameplay`, `SkinAndSong`)
+- Optional deeper i18n: skin module names, concert titles, character `alt` (proper nouns often stay EN)
+- **Backend:** only `backend/README.md` plan (Steam/posts/leaderboard vision); `backend/src` empty — **0 Java**. Prefer ship chat API first over full social/Steam stack
+- **AI / Mobile:** not started
+- Note: older `backend/README.md` still lists Steam/social first and mentions `GROQ_API_KEY` example — strategy now prioritizes **chat proxy (Gemini)** hosted by Spring; social/Steam later if needed

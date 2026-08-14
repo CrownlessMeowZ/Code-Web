@@ -1,0 +1,42 @@
+/* ================================================================
+   NAV LINKS (preview gallery)
+   ================================================================ */
+nav.links { display: block; width: 90%; margin: 12px auto 24px; }
+nav.links ul {
+    list-style: none; display: flex; flex-wrap: wrap;
+    gap: 14px; justify-content: center; padding: 0; margin-top: 10px;
+}
+nav.links li { text-align: center; flex: 0 0 auto; }
+nav.links li figcaption {
+    font-size: 11px; color: var(--muted); margin-bottom: 6px;
+    font-style: normal; font-weight: 600; letter-spacing: .5px; text-transform: uppercase;
+}
+nav.links img {
+    width: 180px; height: 101px; object-fit: cover;
+    animation: pulse 3s ease-in-out infinite;
+}
+nav.links img:focus { outline: 3px solid var(--pink); outline-offset: 4px; }
+
+/* ---- preview box ---- */
+.preview-wrapper { width: 66%; margin: 0 auto 12px; text-align: center; }
+.preview-box {
+    width: 100%; padding-top: 56.25%; height: 0;
+    border: 2px dashed rgba(0,212,255,.35); border-radius: var(--r);
+    background: rgba(0,212,255,.03);
+    background-size: contain; background-position: center; background-repeat: no-repeat;
+    transition: border-color var(--t), box-shadow var(--t);
+}
+.preview-box.active { border-style: solid; border-color: var(--pink); box-shadow: 0 0 32px rgba(255,102,204,.2); }
+.preview-caption { margin-top: 8px; font-style: italic; font-weight: 600; color: var(--muted); font-size: 13px; min-height: 20px; }
+
+/* ---- undo button ---- */
+.undo-btn {
+    display: block; margin: 0 auto 16px;
+    padding: 8px 24px; background: transparent; color: var(--cyan);
+    border: 1px solid var(--cyan); border-radius: 999px; cursor: pointer;
+    font-family: var(--ff-b); font-size: 12px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    transition: background var(--t), color var(--t), transform var(--t);
+}
+.undo-btn:hover { background: var(--cyan); color: #000; transform: scale(1.05); }
+.undo-btn:focus { outline: 3px solid var(--cyan); outline-offset: 3px; }

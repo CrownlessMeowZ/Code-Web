@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useRef } from 'react';
 
+const DEFAULT_COLORS = ['#00d4ff', '#ff66cc', '#ffe566', '#aaaaff', '#ffffff'];
+const DEFAULT_CHARS = ['♩', '♪', '♫', '♬', '✦', '★', '◆'];
+
 export function useCanvasParticles(canvasRef, options = {}) {
   const {
     mode = 'ambient',
-    colors = ['#00d4ff', '#ff66cc', '#ffe566', '#aaaaff', '#ffffff'],
-    chars = ['♩', '♪', '♫', '♬', '✦', '★', '◆'],
+    colors = DEFAULT_COLORS,
+    chars = DEFAULT_CHARS,
     ambientCount = 45,
   } = options;
 

@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useApp } from "../hooks/useApp";
 import {
-  GAMES,
   PLATFORM_FILTER_TABS,
   SERIES_FILTER_TABS,
   VALID_FILTER_ID_SET,
@@ -67,7 +66,7 @@ export default function GameHistory() {
   }, [activeFilter]);
 
   const filtered = useMemo(
-    () => filterGames(GAMES, activeFilter),
+    () => filterGames(activeFilter),
     [activeFilter],
   );
 

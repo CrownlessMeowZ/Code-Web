@@ -6,7 +6,7 @@ function SkinFlipCard({ skin, accent }) {
 
   return (
     <FlipCard
-      className="skin-flip"
+      className="skin-flip diva-flip-card"
       accent={accent}
       ariaLabel={`${skin.name} skin card`}
     >

@@ -1,0 +1,65 @@
+/* ================================================================
+   CONCERTS — timeline figures, penlight, extras
+   (leftover from pages.css / components.css — no visual change)
+   ================================================================ */
+
+/* Magical Mirai Penlight Sync */
+.concerts-timeline-wrap { position: relative; }
+.penlight-canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 2;
+}
+.concerts-timeline .concert-item { cursor: pointer; position: relative; z-index: 1; }
+.concerts-timeline .concert-item:focus-visible {
+    outline: 2px solid var(--page-accent, var(--cyan));
+    outline-offset: 4px;
+}
+
+/* Concerts timeline — linked images (like Home character cards) */
+.concert-figure {
+  margin-top: 14px;
+}
+
+.concerts-timeline .timeline-body img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  border-radius: var(--r);
+  transition: border-color var(--t), transform var(--t);
+}
+
+.concerts-timeline .timeline-body a {
+  display: block;
+}
+
+.concerts-timeline .timeline-body a:hover img {
+  border-color: var(--pink);
+  transform: translateY(-2px);
+}
+
+.concerts-timeline .timeline-body a:focus-visible img {
+  outline: 3px solid var(--pink);
+  outline-offset: 4px;
+}
+
+/* ── Concert page extras ── */
+.concert-meta {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 4px 0 10px;
+    letter-spacing: 0.02em;
+}
+.concert-highlight {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border-left: 3px solid var(--cyan);
+    background: rgba(0, 212, 255, 0.06);
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: var(--cyan);
+    font-style: italic;
+}
+[data-theme="light"] .concert-highlight {
+    background: rgba(0, 150, 200, 0.08);
+}

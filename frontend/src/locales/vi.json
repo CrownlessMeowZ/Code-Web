@@ -22,6 +22,7 @@
   "aria_gameplay_video": "{{title}} — footage gameplay",
   "video_captions_label": "Phụ đề",
   "video_no_support": "Trình duyệt của bạn không hỗ trợ phần tử video.",
+  "video_load_error": "Không thể tải video.",
   "pv_wide": "Toàn cảnh",
   "pv_close": "Cận cảnh",
   "pv_dynamic": "Động",
@@ -257,5 +258,9 @@
   "concert_4_date": "Thg 5 2018",
   "concert_4_location": "Châu Âu + Đông Nam Á",
   "concert_5_date": "Thg 12 2022",
-  "concert_5_location": "Nhiều thành phố Mỹ + Canada"
+  "concert_5_location": "Nhiều thành phố Mỹ + Canada",
+  "error_boundary_title": "Đã xảy ra lỗi",
+  "error_boundary_sub": "Trang này gặp lỗi bất ngờ. Bạn có thể thử lại hoặc về trang chủ.",
+  "error_boundary_retry": "Thử lại",
+  "error_boundary_home": "Trang chủ"
 }

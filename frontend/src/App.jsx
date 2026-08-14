@@ -1,15 +1,18 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import { useDivaAccent } from './hooks/useDivaAccent';
 import Topbar from './components/Topbar';
-import Home from './pages/Home';
-import Characters from './pages/Characters';
-import SkinAndSong from './pages/SkinAndSong';
-import VersionAndGameplay from './pages/VersionAndGameplay';
-import GameHistory from './pages/GameHistory';
-import Producers from './pages/Producers';
-import Concerts from './pages/Concerts';
+import ErrorBoundary from './components/ErrorBoundary';
+
+const Home = lazy(() => import('./pages/Home'));
+const Characters = lazy(() => import('./pages/Characters'));
+const SkinAndSong = lazy(() => import('./pages/SkinAndSong'));
+const VersionAndGameplay = lazy(() => import('./pages/VersionAndGameplay'));
+const GameHistory = lazy(() => import('./pages/GameHistory'));
+const Producers = lazy(() => import('./pages/Producers'));
+const Concerts = lazy(() => import('./pages/Concerts'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 export default function App() {
   return (
@@ -51,29 +54,36 @@ function InnerApp() {
   return (
     <>
       <Topbar />
-      <Routes location={location}>
-        <Route path="/" element={
-          <PageWrapper isHome><Home /></PageWrapper>
-        } />
-        <Route path="/characters" element={
-          <PageWrapper><Characters /></PageWrapper>
-        } />
-        <Route path="/skin-and-song" element={
-          <PageWrapper><SkinAndSong /></PageWrapper>
-        } />
-        <Route path="/version-gameplay" element={
-          <PageWrapper><VersionAndGameplay /></PageWrapper>
-        } />
-        <Route path="/game-history" element={
-          <PageWrapper><GameHistory /></PageWrapper>
-        } />
-        <Route path="/producers" element={
-          <PageWrapper><Producers /></PageWrapper>
-        } />
-        <Route path="/concerts" element={
-          <PageWrapper><Concerts /></PageWrapper>
-        } />
-      </Routes>
+      <ErrorBoundary>
+        <Suspense fallback={<div style={{ height: '100vh' }} />}>
+          <Routes location={location}>
+            <Route path="/" element={
+              <PageWrapper isHome><Home /></PageWrapper>
+            } />
+            <Route path="/characters" element={
+              <PageWrapper><Characters /></PageWrapper>
+            } />
+            <Route path="/skin-and-song" element={
+              <PageWrapper><SkinAndSong /></PageWrapper>
+            } />
+            <Route path="/version-gameplay" element={
+              <PageWrapper><VersionAndGameplay /></PageWrapper>
+            } />
+            <Route path="/game-history" element={
+              <PageWrapper><GameHistory /></PageWrapper>
+            } />
+            <Route path="/producers" element={
+              <PageWrapper><Producers /></PageWrapper>
+            } />
+            <Route path="/concerts" element={
+              <PageWrapper><Concerts /></PageWrapper>
+            } />
+            <Route path="*" element={
+              <PageWrapper><NotFound /></PageWrapper>
+            } />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 }

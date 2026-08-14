@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useApp } from '../hooks/useApp';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { usePvDirector } from '../hooks/usePvDirector';
@@ -11,6 +11,7 @@ import Footer from '../components/Footer';
 function GameplayVideoCard({ v, t, lang }) {
   const { preset, setPreset, frameClass } = usePvDirector();
   const videoRef = useRef(null);
+  const [failed, setFailed] = useState(false);
 
   return (
     <div className="card">
@@ -19,17 +20,23 @@ function GameplayVideoCard({ v, t, lang }) {
       <PvDirectorControls preset={preset} onPresetChange={setPreset} />
       <figure className="pv-director-figure">
         <div className={frameClass}>
-          <video
-            ref={videoRef}
-            controls
-            aria-label={t('aria_gameplay_video', { title: t(v.titleKey) })}
-          >
-            <source src={v.video} type="video/mp4" />
-            <track kind="captions" label={t('video_captions_label')} srcLang={lang} />
-            {t('video_no_support')}
-          </video>
+          {failed ? (
+            <p>{t('video_load_error')}</p>
+          ) : (
+            <video
+              ref={videoRef}
+              controls
+              preload="none"
+              aria-label={t('aria_gameplay_video', { title: t(v.titleKey) })}
+              onError={() => setFailed(true)}
+            >
+              <source src={v.video} type="video/mp4" />
+              <track kind="captions" label={t('video_captions_label')} srcLang={lang} />
+              {t('video_no_support')}
+            </video>
+          )}
         </div>
-        <TechZoneBar videoRef={videoRef} />
+        {!failed && <TechZoneBar videoRef={videoRef} />}
         <figcaption>{t(v.captionKey)}</figcaption>
       </figure>
     </div>

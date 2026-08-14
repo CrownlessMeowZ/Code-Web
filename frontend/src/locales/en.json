@@ -22,6 +22,7 @@
   "aria_gameplay_video": "{{title}} — gameplay footage",
   "video_captions_label": "Captions",
   "video_no_support": "Your browser does not support the video element.",
+  "video_load_error": "Failed to load video.",
   "pv_wide": "Wide",
   "pv_close": "Close",
   "pv_dynamic": "Dynamic",
@@ -257,5 +258,9 @@
   "concert_4_date": "May 2018",
   "concert_4_location": "Europe + Southeast Asia",
   "concert_5_date": "Dec 2022",
-  "concert_5_location": "Multiple US + Canada cities"
+  "concert_5_location": "Multiple US + Canada cities",
+  "error_boundary_title": "Something went wrong",
+  "error_boundary_sub": "This page hit an unexpected error. You can retry or return home.",
+  "error_boundary_retry": "Retry",
+  "error_boundary_home": "Home"
 }

@@ -1,0 +1,178 @@
+/* ================================================================
+   FLIP CARDS — shared 3D primitive + character / skin faces
+   ================================================================ */
+
+/* Shared 3D shell (Characters + SkinSpotlight) */
+.diva-flip-card {
+    perspective: 1000px; height: 480px; cursor: pointer;
+}
+.diva-flip-card-inner {
+    position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    transition: transform .7s cubic-bezier(.4,0,.2,1);
+}
+.diva-flip-card:hover .diva-flip-card-inner,
+.diva-flip-card.flipped .diva-flip-card-inner { transform: rotateY(180deg); }
+
+/* Shared face mechanics — borders stay contextual */
+.char-flip-front, .char-flip-back,
+.skin-flip-front, .skin-flip-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border-radius: var(--r); overflow: hidden;
+}
+
+/* ================================================================
+   Characters page grid + faces
+   ================================================================ */
+.char-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px; padding: 28px 24px;
+    max-width: 1400px; margin: 0 auto;
+}
+.char-flip-front, .char-flip-back {
+    border: 1px solid var(--border);
+}
+.char-flip-front { background: var(--surface); }
+.char-flip-front img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center;
+    display: block; border: none; padding: 0; border-radius: 0; margin: 0;
+    transition: transform .7s ease;
+    background: var(--surface);
+}
+.char-flip:hover .char-flip-front img { transform: scale(1.05); }
+
+.char-name-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 40px 16px 14px;
+    background: linear-gradient(0deg, rgba(4,4,15,.95), transparent);
+    font-family: var(--ff-d); font-size: 13px; letter-spacing: 2px;
+    text-align: center; color: var(--text);
+}
+.char-flip-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, #090920 0%, #0e0e2e 100%);
+    padding: 22px 18px; display: flex; flex-direction: column; gap: 10px;
+}
+.char-back-name {
+    font-family: var(--ff-d); font-size: 13px; letter-spacing: 2px;
+    margin-bottom: 2px;
+}
+.char-code {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 4px;
+}
+.char-stat-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+    font-size: 13px;
+}
+.char-stat-label { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+.char-stat-val { color: var(--text); font-size: 13px; text-align: right; }
+.char-songs-title {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 2px;
+    color: var(--muted); margin-top: 4px;
+}
+.char-songs-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.char-songs-list li {
+    font-size: 12px; color: var(--text); padding: 4px 10px;
+    background: rgba(0,212,255,.07); border-radius: 6px;
+    border-left: 2px solid var(--accent-c, var(--cyan));
+}
+
+/* ================================================================
+   Skin spotlight layout + faces (height / grid stay here)
+   ================================================================ */
+.skin-spotlight {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+}
+.skin-group {
+    margin-bottom: 48px;
+}
+.skin-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    padding: 0 0 8px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.skin-flip-front, .skin-flip-back {
+    border: 1px solid rgba(255,255,255,.08);
+}
+.skin-flip-front { background: var(--surface); }
+.skin-flip-front img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    display: block; border: none; padding: 0;
+    border-radius: 0; margin: 0;
+    transition: transform .7s ease;
+    background: var(--surface);
+}
+.skin-flip:hover .skin-flip-front img { transform: scale(1.05); }
+
+.skin-name-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 40px 16px 14px;
+    background: linear-gradient(0deg, rgba(4,4,15,.95), transparent);
+    font-family: var(--ff-d); font-size: 12px; letter-spacing: 2px;
+    text-align: center; color: var(--text);
+}
+
+.skin-flip-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, #090920 0%, #0e0e2e 100%);
+    padding: 24px 20px;
+    display: flex; flex-direction: column; gap: 10px;
+    border-color: var(--accent-c, var(--cyan));
+}
+.skin-back-name {
+    font-family: var(--ff-d); font-size: 13px;
+    letter-spacing: 2px; margin-bottom: 4px;
+}
+.skin-stat-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+    font-size: 13px;
+}
+.skin-stat-label {
+    color: var(--muted); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 1px;
+    flex-shrink: 0;
+}
+.skin-stat-val {
+    color: var(--text); font-size: 13px;
+    text-align: right; margin-left: 12px;
+}
+.skin-desc {
+    font-size: 13px; color: var(--muted);
+    line-height: 1.7; margin-top: 6px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    padding-top: 10px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Responsive — skin grid + height only (char heights stay in responsive.css) */
+@media screen and (max-width: 479px) {
+    .skin-grid { grid-template-columns: 1fr; }
+    .skin-flip { height: 360px; }
+}
+@media screen and (min-width: 480px) and (max-width: 771px) {
+    .skin-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .skin-flip { height: 380px; }
+}
+@media screen and (min-width: 772px) and (max-width: 997px) {
+    .skin-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .skin-flip { height: 400px; }
+}
+
+/* Light mode — skin faces (char faces stay in theme-light.css) */
+[data-theme="light"] .skin-flip-back {
+    background: linear-gradient(135deg, #e8eeff 0%, #f0f4ff 100%);
+}
+[data-theme="light"] .skin-flip-front,
+[data-theme="light"] .skin-flip-back { border-color: rgba(0,150,200,.2); }

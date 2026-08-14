@@ -10,7 +10,7 @@ function CharFlipCard({ char, onAccentSelect }) {
 
   return (
     <FlipCard
-      className={`char-flip ${char.id}-card`}
+      className={`char-flip diva-flip-card ${char.id}-card`}
       accent={char.accent}
       ariaLabel={`${char.name} profile card`}
       onFlip={() => onAccentSelect(char.accent)}
